@@ -1,0 +1,41 @@
+* {
+  font-family: "Consolas", "Courier New", monospace !important;
+}
+
+
+/*Auth layout*/
+
+#auth-layout {
+  background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+}
+
+.col-img {
+  background: url("https://images.pexels.com/photos/4098148/pexels-photo-4098148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-size: cover;
+  background-position: center;
+  .col-cover {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    backdrop-filter: blur(5px);
+    padding: 20px;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/*  custom css vuetify */
+.v-list-item__spacer {
+  width: 1rem !important;
+}
+
+.v-list-group__items .v-list-item {
+  padding-inline-start: 2rem !important;
+}
+.v-field__outline {
+  display: none !important;
+}

@@ -1,7 +1,6 @@
 * {
-  font-family: "Consolas", "Courier New", monospace !important;
+  font-family: "Roboto", sans-serif;
 }
-
 
 /*Auth layout*/
 
@@ -10,9 +9,10 @@
 }
 
 .col-img {
-  background: url("https://images.pexels.com/photos/4098148/pexels-photo-4098148.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background: url("https://images.pexels.com/photos/5699516/pexels-photo-5699516.jpeg");
   background-size: cover;
   background-position: center;
+  height: 100vh;
   .col-cover {
     background: rgba(0, 0, 0, 0.5);
     color: white;
@@ -23,7 +23,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
   }
 }

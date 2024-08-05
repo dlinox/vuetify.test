@@ -17,6 +17,11 @@ export const useAuthStore = defineStore("auth", () => {
     permissions: "",
   });
 
+  const signInSuccess = (response: any) => {
+    localStorage.setItem("token", response.data);
+    router.push("/survey");
+  };
+
   const setAuthState = (auth: Auth, isSignIn: boolean = false) => {
     authState.value = auth;
     if (isSignIn) router.push("/a");
@@ -39,5 +44,6 @@ export const useAuthStore = defineStore("auth", () => {
     authState,
     setAuthState,
     clearAuthState,
+    signInSuccess,
   };
 });

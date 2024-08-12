@@ -1,5 +1,5 @@
 interface AuthForm {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -7,7 +7,7 @@ interface AuthUser {
   id: number | null;
   name: string;
   role: string;
-  email: string;
+  email: string | null;
 }
 
 interface Auth {

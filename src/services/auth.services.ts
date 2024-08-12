@@ -6,11 +6,10 @@ export const signIn = async (form: AuthForm): Promise<boolean> => {
   const authStore = useAuthStore();
   try {
     let response = await http().post(`/auth/sign-in`, form);
-    localStorage.setItem("token", response.data.token);
-    authStore.setAuthState(response.data, true);
+    authStore.signInSuccess(response.data);
     return true;
-  } catch (error) {
-    return false;
+  } catch (error) { 
+    throw error;
   }
 };
 

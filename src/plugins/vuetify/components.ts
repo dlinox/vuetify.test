@@ -24,10 +24,13 @@ import {
   VTextField,
   VForm,
   VCardItem,
+  VCardActions,
   VToolbar,
   VToolbarTitle,
   VDivider,
   VSelect,
+  VRadioGroup,
+  VRadio,
 } from "vuetify/components";
 
 export {
@@ -56,8 +59,11 @@ export {
   VTextField,
   VForm,
   VCardItem,
+  VCardActions,
   VToolbar,
   VToolbarTitle,
   VDivider,
   VSelect,
+  VRadioGroup,
+  VRadio,
 };

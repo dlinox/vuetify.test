@@ -1,5 +1,5 @@
 <template>
-estudiantes
+    students
 </template>
 <script setup lang="ts">
 </script>

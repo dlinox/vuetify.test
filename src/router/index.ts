@@ -9,7 +9,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: "",
         name: "Login",
-        component: () => import("../views/auth/index.vue"),
+        component: () => import("@/app/auth/views/index.vue"),
       },
     ],
   },
@@ -21,44 +21,44 @@ const routes: RouteRecordRaw[] = [
       {
         path: "",
         name: "Dashboard",
-        component: () => import("../views/index.vue"),
+        component: () => import("@/app/dashboard/views/index.vue"),
       },
       {
         path: "students",
         name: "Students",
-        component: () => import("../views/students/index.vue"),
+        component: () => import("@/app/students/views//index.vue"),
       },
 
       {
         path: "professors",
         name: "Profesores",
-        component: () => import("../views/professors/index.vue"),
+        component: () => import("@/app/professors/views/index.vue"),
       },
       {
         path: "workers",
         name: "Trabajadores",
-        component: () => import("../views/workers/index.vue"),
+        component: () => import("@/app/workers/views/index.vue"),
       },
       {
         path: "users",
         name: "Usuarios",
-        component: () => import("../views/users/index.vue"),
+        component: () => import("@/app/users/views/index.vue"),
       },
 
       {
         path: "roles",
         name: "Roles",
-        component: () => import("../views/roles/index.vue"),
+        component: () => import("@/app/roles/views/index.vue"),
       },
       {
         path: "offices",
         name: "Oficinas",
-        component: () => import("../views/offices/index.vue"),
+        component: () => import("@/app/offices/views/index.vue"),
       },
       {
         path: "attention-types",
         name: "Tipos de atención",
-        component: () => import("../views/attention-types/index.vue"),
+        component: () => import("@/app/attention-types/views/index.vue"),
       },
     ],
   },

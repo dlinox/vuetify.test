@@ -35,7 +35,7 @@
       <v-card class="rounded-0">
         <v-toolbar density="compact" title="Hoy">
           <v-spacer></v-spacer>
-          <v-btn>
+          <v-btn link to="/a/attentions/reports">
             <small>ver todo</small>
           </v-btn>
         </v-toolbar>

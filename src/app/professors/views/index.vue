@@ -1,4 +1,7 @@
 <template>
-    professors
-</template>
-<script setup lang="ts"></script>
+    <DataTable />
+  </template>
+  <script setup lang="ts">
+  import DataTable from "@/app/professors/components/DataTable.vue";
+  </script>
+    

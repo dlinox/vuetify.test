@@ -1,5 +1,7 @@
 <template>
-    roles
-</template>
-<script setup lang="ts">
-</script>
+    <DataTable />
+  </template>
+  <script setup lang="ts">
+  import DataTable from "@/app/roles/components/DataTable.vue";
+  </script>
+  

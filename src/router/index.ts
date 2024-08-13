@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: "/survey",
+    path: "/a",
     name: "AdminLayout",
     component: () => import("../layouts/AdminLayout.vue"),
     children: [

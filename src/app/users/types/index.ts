@@ -1,12 +1,12 @@
 interface User {
-  id: string;
+  id: number | null;
   name: string;
   paternal_surname?: string;
   maternal_surname?: string;
   document_type: string;
   document_number: string;
-  office_id: string | null;
-  role_id?: string | null;
+  office_id: number | null;
+  role_id?: number | null;
   email?: string;
   password?: string;
   status: boolean;
@@ -14,7 +14,7 @@ interface User {
 }
 
 const UserDefault = {
-  id: "",
+  id: null,
   name: "",
   paternal_surname: "",
   maternal_surname: "",

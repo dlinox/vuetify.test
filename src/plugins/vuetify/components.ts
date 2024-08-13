@@ -31,6 +31,15 @@ import {
   VSelect,
   VRadioGroup,
   VRadio,
+  VDataTableServer,
+  VChip,
+  VDialog,
+  //v-list-item-action
+  VListItemAction,
+  //v-checkbox-btn
+  VCheckboxBtn,
+  //v-switch
+  VSwitch,
 } from "vuetify/components";
 
 export {
@@ -66,4 +75,10 @@ export {
   VSelect,
   VRadioGroup,
   VRadio,
+  VDataTableServer,
+  VChip,
+  VDialog,
+  VListItemAction,
+  VCheckboxBtn,
+  VSwitch,  
 };

@@ -30,43 +30,21 @@
       @update:options="loadItems"
     >
       <template v-slot:item.actions="{ item }">
-        <Form :form-state="item" @onSuccess="loadItems(options)">
-          <template v-slot:btn="{ activator }">
-            <v-btn
-              v-bind="activator"
-              density="comfortable"
-              icon="mdi-pencil"
-              class="text-button"
-              variant="tonal"
-            />
-          </template>
-        </Form>
-
-        <Form :form-state="item" @onSuccess="loadItems(options)" :permissions="permissions">
-          <template v-slot:btn="{ activator }">
-            <v-btn
-              v-bind="activator"
-              prepend-icon="mdi-lock"
-              class="text-button ms-2"
-              variant="tonal"
-            >
-              Permisos
-            </v-btn>
-          </template>
-        </Form>
-
-        <!-- <v-btn
-          density="comfortable"
-          icon="mdi-minus-circle-outline"
-          class="text-button ms-2"
-          variant="tonal"
-          color="error"
-        >
-        </v-btn> -->
+        <div class="d-flex justify-end">
+          <Form :form-state="item" @onSuccess="loadItems(options)">
+            <template v-slot:btn="{ activator }">
+              <v-btn
+                v-bind="activator"
+                density="comfortable"
+                icon="mdi-pencil"
+                class="text-button"
+                variant="tonal"
+              />
+            </template>
+          </Form>
+        </div>
       </template>
     </v-data-table-server>
-
-
   </v-card>
 </template>
 <script setup lang="ts">

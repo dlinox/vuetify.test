@@ -1,3 +1,4 @@
+
 export default {
   VBtn: {
     color: "primary",
@@ -10,6 +11,15 @@ export default {
     color: "black",
     rounded: "lg",
     hideDetails: "auto",
+  },
+  VCombobox: {
+    color: "black",
+    rounded: "lg",
+    hideDetails: "auto",
+  },
+  VTextarea: {
+    hideDetails: "auto",
+    rounded: "lg",
   },
   VSelect: {
     color: "black",

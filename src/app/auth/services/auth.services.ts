@@ -1,5 +1,5 @@
 import { http } from "@/helpers/http";
-import { type AuthForm } from "@/types/auth.types.ts";
+import { type AuthForm } from "@/app/auth/types/auth.types.ts";
 import { useAuthStore } from "@/stores/auth.stores";
 
 export const signIn = async (form: AuthForm): Promise<boolean> => {

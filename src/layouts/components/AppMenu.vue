@@ -9,6 +9,15 @@
       exact
     />
     <v-list-item
+      key="attentions"
+      to="/a/attentions"
+      title="Atenciones"
+      prepend-icon="mdi-account"
+      link
+      exact
+    />
+
+    <v-list-item
       key="students"
       to="/a/students"
       title="Estudiantes"

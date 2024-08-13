@@ -34,12 +34,15 @@ import {
   VDataTableServer,
   VChip,
   VDialog,
-  //v-list-item-action
   VListItemAction,
-  //v-checkbox-btn
   VCheckboxBtn,
-  //v-switch
   VSwitch,
+  VTab,
+  VTabs,
+  VTabsWindow,
+  VTabsWindowItem,
+  VCombobox,
+  VTextarea,
 } from "vuetify/components";
 
 export {
@@ -80,5 +83,11 @@ export {
   VDialog,
   VListItemAction,
   VCheckboxBtn,
-  VSwitch,  
+  VSwitch,
+  VTab,
+  VTabs,
+  VTabsWindow,
+  VTabsWindowItem,
+  VCombobox,
+  VTextarea,
 };

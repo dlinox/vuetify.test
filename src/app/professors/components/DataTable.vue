@@ -3,7 +3,7 @@
     <v-card-item>
       <v-row justify="space-between">
         <v-col cols="12" md="5" class="d-flex justify-end align-end">
-          <Form @onSuccess="loadItems(options)">
+          <Form @onSuccess="loadItems(options)" v-if="false">
             <template v-slot:btn="{ activator }">
               <v-btn
                 v-bind="activator"
@@ -44,7 +44,7 @@
         </v-chip>
       </template>
       <template v-slot:item.actions="{ item }">
-        <Form :form-state="item" @onSuccess="loadItems(options)">
+        <Form :form-state="item" @onSuccess="loadItems(options)" v-if="false">
           <template v-slot:btn="{ activator }">
             <v-btn
               v-bind="activator"

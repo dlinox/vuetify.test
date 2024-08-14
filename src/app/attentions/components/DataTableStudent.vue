@@ -14,14 +14,27 @@
           </v-btn>
           <v-text-field v-model="options.search" label="Buscar" />
         </v-col>
-        <v-col cols="12" md="2">
+        <v-col cols="12" md="7" class="d-flex justify-end align-end">
           <v-select
-            v-model="options.filters.status"
-            label="Estado"
-            :items="statusItems"
+            v-model="options.filters.type_attention_id"
+            :items="typeAttentions"
+            label="Tipo de atención"
+            dense
+            outlined
             clearable
+            class="mr-2"
             @update:model-value="loadItems(options)"
           />
+          <v-btn
+            color="primary"
+            @click="loadItems(options)"
+            :loading="loading"
+            :disabled="loading"
+            icon
+            variant="tonal"
+          >
+            <v-icon>mdi-refresh</v-icon>
+          </v-btn>
         </v-col>
       </v-row>
     </v-card-item>
@@ -168,11 +181,6 @@ const headers = [
     title: "",
     value: "actions",
   },
-];
-
-const statusItems = [
-  { title: "Activo", value: true },
-  { title: "Inactivo", value: false },
 ];
 
 const loading = ref(false);

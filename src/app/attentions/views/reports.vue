@@ -39,6 +39,7 @@ import WorkerReportWindow from "@/app/attentions/components/WorkerReportWindow.v
 
 const typeAttentions: Ref<SelectItem[]> = ref([]);
 const offices: Ref<SelectItem[]> = ref([]);
+
 const tab = ref("student");
 
 const init = async () => {

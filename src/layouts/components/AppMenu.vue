@@ -15,6 +15,7 @@
       prepend-icon="mdi-account"
       link
       exact
+      v-permission="['attentions']"
     />
 
     <v-list-item
@@ -24,6 +25,7 @@
       prepend-icon="mdi-account"
       link
       exact
+      v-permission="['students']"
     />
 
     <v-list-item
@@ -33,6 +35,7 @@
       prepend-icon="mdi-account"
       link
       exact
+      v-permission="['professors']"
     />
 
     <v-list-item
@@ -42,9 +45,10 @@
       prepend-icon="mdi-account"
       link
       exact
+      v-permission="['workers']"
     />
 
-    <v-list-group value="config">
+    <v-list-group value="config" v-permission="['offices', 'type-attentions']">
       <template v-slot:activator="{ props }">
         <v-list-item
           v-bind="props"
@@ -60,6 +64,7 @@
         prepend-icon="mdi-office-building"
         link
         exact
+        v-permission="['offices']"
       />
 
       <v-list-item
@@ -69,9 +74,10 @@
         prepend-icon="mdi-account"
         link
         exact
+        v-permission="['type-attentions']"
       />
     </v-list-group>
-    <v-list-group value="security">
+    <v-list-group value="security" v-permission="['users', 'roles']">
       <template v-slot:activator="{ props }">
         <v-list-item
           v-bind="props"
@@ -96,6 +102,7 @@
         prepend-icon="mdi-account"
         link
         exact
+        v-permission="['roles']"
       />
     </v-list-group>
   </v-list>

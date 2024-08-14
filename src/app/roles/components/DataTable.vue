@@ -45,7 +45,7 @@
         </div>
       </template>
     </v-data-table-server>
-    {{ permissions }}
+
   </v-card>
 </template>
 <script setup lang="ts">

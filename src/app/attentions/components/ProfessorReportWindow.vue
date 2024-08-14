@@ -1,13 +1,9 @@
 <template>
-  <DataTableStudent
-    :type-attentions="typeAttentions"
-    :offices="offices"
-    type="001"
-  />
+  <DataTableStudent :type-attentions="typeAttentions" :offices="offices" type="002" />
 </template>
 <script lang="ts" setup>
 import DataTableStudent from "@/app/attentions/components/DataTableStudent.vue";
-import { SelectItem } from "@/common/types/select.types";
+import { SelectItem } from "@/common/types/select.types";   
 
 defineProps({
   typeAttentions: {

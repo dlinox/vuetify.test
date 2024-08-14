@@ -1,12 +1,4 @@
-// person_id: "",
-// type_attention_id: null,
-// report_number: "",
-// description: "",
-// derivate_to: [],  person_id: "",
-// type_attention_id: null,
-// report_number: "",
-// description: "",
-// derivate_to: [],
+
 
 interface Attention {
   id: number | null;
@@ -26,4 +18,23 @@ const AttentionDefault: Attention = {
   derivate_to: [],
 };
 
-export { type Attention , AttentionDefault };
+
+interface AttentionReport {
+  id: number;
+  report_number: string;
+  person_id: number;
+  person_type: string;
+  person_name: string;
+  person_document: string;
+  person_code: string;
+  unit_name: string;
+  unit_code: string;
+  type_attention_id: number;
+  type_attention_name: string;
+  user_id: number;
+  user_office_id: number;
+  created_at: string;
+}
+
+
+export { type Attention , AttentionDefault, type AttentionReport };

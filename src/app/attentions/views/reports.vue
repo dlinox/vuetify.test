@@ -9,18 +9,42 @@
 
   <v-tabs-window v-model="tab">
     <v-tabs-window-item value="student">
-      student
+      <StudentReportWindow
+        :type-attentions="typeAttentions"
+        :offices="offices"
+      />
     </v-tabs-window-item>
     <v-tabs-window-item value="professor">
-      professor
+      <ProfessorReportWindow
+        :type-attentions="typeAttentions"
+        :offices="offices"
+      />
     </v-tabs-window-item>
     <v-tabs-window-item value="worker">
-      worker
+      <WorkerReportWindow
+        :type-attentions="typeAttentions"
+        :offices="offices"
+      />
     </v-tabs-window-item>
   </v-tabs-window>
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import { Ref, ref } from "vue";
+import StudentReportWindow from "@/app/attentions/components/StudentReportWindow.vue";
 
+import { getTypeAttentions, getItemsOffices } from "@/app/attentions/services";
+import { SelectItem } from "@/common/types/select.types";
+import ProfessorReportWindow from "@/app/attentions/components/ProfessorReportWindow.vue";
+import WorkerReportWindow from "@/app/attentions/components/WorkerReportWindow.vue";
+
+const typeAttentions: Ref<SelectItem[]> = ref([]);
+const offices: Ref<SelectItem[]> = ref([]);
 const tab = ref("student");
+
+const init = async () => {
+  typeAttentions.value = await getTypeAttentions();
+  offices.value = await getItemsOffices();
+};
+
+init();
 </script>

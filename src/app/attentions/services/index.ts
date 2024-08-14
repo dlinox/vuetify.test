@@ -2,6 +2,45 @@ import { http } from "@/helpers/http";
 
 import { type Student } from "@/app/students/types";
 import { SelectItem } from "@/common/types/select.types";
+import { DataTableDefaultResponse } from "@/common/constants/data-table.constants";
+import {
+  DataTableOptions,
+  DataTableResponse,
+} from "@/common/types/data-table.types";
+import { AttentionReport } from "@/app/attentions/types";
+
+//getItemsStudent
+
+export const getItemsStudent = async (
+  options: DataTableOptions,
+  type: string
+): Promise<DataTableResponse<AttentionReport>> => {
+  try {
+    let token = localStorage.getItem("token") as string;
+    let response = await http(token).post(
+      "/attentions/items-students/" + type,
+      options
+    );
+
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return DataTableDefaultResponse;
+  }
+};
+
+//get attention person
+export const getHistoty = async (document: string): Promise<any[]> => {
+  try {
+    let token = localStorage.getItem("token") as string;
+    let response = await http(token).get("/attentions/history/" + document);
+    return response.data;
+  } catch {
+    return [];
+  }
+};
 
 export const receiveStudent = async (data: Student): Promise<boolean> => {
   try {
@@ -58,11 +97,13 @@ export const getWorkerByDocument = async (document: string): Promise<any> => {
 
 export const storeItem = async (data: any, type: string) => {
   let token = localStorage.getItem("token") as string;
-  let response = await http(token).post(`/attentions/${type}`, data, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+  let response = await http(token).post(`/attentions/${type}`, data);
+  return response.data;
+};
+
+export const updateItem = async (data: any) => {
+  let token = localStorage.getItem("token") as string;
+  let response = await http(token).put(`/attentions`, data);
   return response.data;
 };
 
@@ -73,6 +114,7 @@ export const getTodayAttentions = async () => {
   return response.data;
 };
 
+//items-student
 
 //  mover a common
 

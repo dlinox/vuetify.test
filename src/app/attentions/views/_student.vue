@@ -71,6 +71,9 @@
           </v-row>
         </v-form>
       </v-tabs-window-item>
+      <v-tabs-window-item value="history">
+        <ListHistoy :document="route.params.document as string" />
+      </v-tabs-window-item>
     </v-tabs-window>
   </v-card>
 </template>
@@ -89,6 +92,7 @@ import { type Student } from "@/app/students/types";
 import { type Attention, AttentionDefault } from "@/app/attentions/types";
 
 import { SelectItem } from "@/common/types/select.types";
+import ListHistoy from "../components/ListHistoy.vue";
 
 const route = useRoute();
 const tab = ref("attention");

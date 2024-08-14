@@ -5,12 +5,13 @@
       <template #append>
         <v-list-item
           class="py-2 border-t"
-          title="Juan Perez"
-          subtitle="Administrador"
+          :title="authStore.authState.user.name"
+          :subtitle="authStore.authState.user.role"
           prepend-avatar="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoPYGvsOKyoPhMLvER1SNT4W3RyX6VPeXTxg&s"
         >
           <template v-slot:append>
             <v-btn
+              @click="signOut"
               color="grey-lighten-1"
               icon="mdi-power"
               variant="text"
@@ -43,9 +44,12 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-
 import { useRoute } from "vue-router";
 import AppMenu from "./components/AppMenu.vue";
+import { signOut } from "@/app/auth/services/auth.services";
+
+import { useAuthStore } from "@/stores/auth.stores";
+const authStore = useAuthStore();
 
 const drawer = ref(true);
 

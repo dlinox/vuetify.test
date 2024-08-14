@@ -71,12 +71,17 @@
           </v-row>
         </v-form>
       </v-tabs-window-item>
+
+      <v-tabs-window-item value="history">
+        <ListHistoy :document="item?.document_number" />
+      </v-tabs-window-item>
     </v-tabs-window>
   </v-card>
 </template>
 <script setup lang="ts">
 import { ref, Ref } from "vue";
 import { useRoute } from "vue-router";
+import ListHistoy from "@/app/attentions/components/ListHistoy.vue";
 
 import { getProfessorByDocument } from "@/app/attentions/services";
 import {

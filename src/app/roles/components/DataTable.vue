@@ -31,7 +31,7 @@
     >
       <template v-slot:item.actions="{ item }">
         <div class="d-flex justify-end">
-          <Form :form-state="item" @onSuccess="loadItems(options)">
+          <Form :form-state="item" @onSuccess="loadItems(options)" :permissions="permissions">
             <template v-slot:btn="{ activator }">
               <v-btn
                 v-bind="activator"
@@ -45,6 +45,7 @@
         </div>
       </template>
     </v-data-table-server>
+    {{ permissions }}
   </v-card>
 </template>
 <script setup lang="ts">

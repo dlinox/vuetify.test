@@ -1,10 +1,14 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
+import { authMiddleware, noAuthMiddleware } from "@/middleware/auth";
+
+
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
     name: "AuthLayout",
     component: () => import("../layouts/AuthLayout.vue"),
+    beforeEnter: noAuthMiddleware,
     children: [
       {
         path: "",
@@ -17,6 +21,7 @@ const routes: RouteRecordRaw[] = [
     path: "/a",
     name: "AdminLayout",
     component: () => import("../layouts/AdminLayout.vue"),
+    beforeEnter: authMiddleware,
     children: [
       {
         path: "",

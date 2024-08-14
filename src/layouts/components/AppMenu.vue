@@ -87,6 +87,7 @@
         prepend-icon="mdi-account"
         link
         exact
+        v-permission="['users']"
       />
       <v-list-item
         key="roles"

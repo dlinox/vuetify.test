@@ -1,5 +1,4 @@
-import { user } from "@/app/services";
-
+import { user } from "@/app/auth/services/auth.services";
 
 import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
 export const authMiddleware = async (
@@ -26,9 +25,8 @@ export const noAuthMiddleware = async (
   const auth = await user();
   if (auth) {
     console.log("Redirecting to dashboard...");
-    
-    next({ name: "Dashboard" });
 
+    next({ name: "Dashboard" });
   } else {
     next();
   }

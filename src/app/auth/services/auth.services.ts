@@ -35,7 +35,13 @@ export const user = async () => {
     let response = await http(token).get(`auth/user`);
     authStore.setAuthState(response.data);
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
+    // if (error.response.status === 401) {
+    //   localStorage.removeItem("token");
+    //   authStore.clearAuthState();
+    //   window.location.href = "/";
+    // }
+
     return false;
   }
 };

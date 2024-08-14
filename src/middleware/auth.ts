@@ -9,7 +9,7 @@ export const authMiddleware = async (
   const auth = await user();
   if (!auth) {
     console.log("Redirecting to login page...");
-    next({ name: "AuthLogin" });
+    next({ name: "Login" });
     //window.location.href = import.meta.env.VITE_URL_API_UNAP_LOGIN;
   } else {
     next();

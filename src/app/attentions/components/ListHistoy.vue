@@ -23,7 +23,7 @@
 import { getHistoty } from "@/app/attentions/services";
 import { Ref, ref } from "vue";
 import { useRoute } from "vue-router";
-const props = defineProps({
+defineProps({
   document: {
     type: String,
   },

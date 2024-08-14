@@ -15,13 +15,14 @@
               color="grey-lighten-1"
               icon="mdi-power"
               variant="text"
+              size="small"
             ></v-btn>
           </template>
         </v-list-item>
       </template>
     </v-navigation-drawer>
     <v-app-bar floating elevation="0">
-      <v-btn icon @click="drawer = !drawer">
+      <v-btn icon @click="drawer = !drawer" >
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-app-bar>

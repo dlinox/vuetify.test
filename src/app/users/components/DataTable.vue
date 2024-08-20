@@ -56,14 +56,6 @@
           </template>
         </Form>
 
-        <!-- <v-btn
-          density="comfortable"
-          icon="mdi-minus-circle-outline"
-          class="text-button ms-2"
-          variant="tonal"
-          color="error"
-        >
-        </v-btn> -->
       </template>
     </v-data-table-server>
   </v-card>

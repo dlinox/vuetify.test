@@ -28,11 +28,21 @@
               </v-col>
 
               <v-col cols="12">
-                <v-select
+                {{ form.office_id }}
+                <v-combobox
                   v-model="form.office_id"
-                  :items="offices"
+                  :items="[
+                    {
+                      value: null,
+                      title: 'Todas las oficinas (no seleccionar ninguna)',
+                    },
+                    ...offices,
+                  ]"
                   label="Oficina"
-                ></v-select>
+                  hint="Selecciona una oficina, si no seleccionas ninguna se asignará a todas las oficinas"
+                  persistent-hint
+                  :return-object="false"
+                ></v-combobox>
               </v-col>
 
               <v-col cols="12">
@@ -91,7 +101,6 @@ const loading = ref(false);
 const props = defineProps({
   formState: {
     type: Object as () => Partial<User>,
-    default: () => ({}),
   },
 
   offices: {
@@ -114,14 +123,14 @@ const submit = async (isActive: Ref<boolean>) => {
   loading.value = true;
   if (form.value.id) {
     if (await updateItem(form.value)) {
-      form.value = { ...UserDefault };
+      // form.value = { ...UserDefault };
 
       emit("onSuccess");
       isActive.value = false;
     }
   } else {
     if (await saveItem(form.value)) {
-      form.value = { ...UserDefault };
+      // form.value = { ...UserDefault };
 
       emit("onSuccess");
       isActive.value = false;

@@ -65,6 +65,10 @@
           </v-list-item-subtitle>
 
           <template v-slot:prepend>
+
+            
+            <DeleteItem :id="item.id"  @onSuccess="getToday"/>
+
             <FormAttention
               :form-state="item"
               @onSuccess="getToday"
@@ -76,7 +80,7 @@
               <template v-slot:btn="{ activator }">
                 <v-btn
                   icon
-                  density="compact"
+                  density="comfortable"
                   variant="tonal"
                   color="teal-darken-3"
                   v-bind="activator"
@@ -98,6 +102,7 @@ import StudentSearchWindow from "@/app/attentions/components/StudentSearchWindow
 import ProfessorSearchWindow from "@/app/attentions/components/ProfessorSearchWindow.vue";
 import WorkerSearchWindow from "@/app/attentions/components/WorkerSearchWindow.vue";
 import FormAttention from "@/app/attentions/components/FormAttention.vue";
+import DeleteItem from "@/app/attentions/components/DeleteItem.vue";
 
 import { getTodayAttentions } from "@/app/attentions/services";
 import { getTypeAttentions, getItemsOffices } from "@/app/attentions/services";

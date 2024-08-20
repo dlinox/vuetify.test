@@ -13,7 +13,11 @@
               />
             </template>
           </Form>
-          <v-text-field v-model="options.search" label="Buscar" />
+          <v-text-field
+            v-model="options.search"
+            
+            label="Buscar"
+          />
         </v-col>
         <v-col cols="12" md="2">
           <v-select
@@ -32,8 +36,8 @@
       :items="items?.data"
       :items-length="items!.total"
       :search="options.search"
-      multi-sort
       :loading="loading"
+      multi-sort
       item-value="id"
       items-per-page-text="Número de filas por página:"
       @update:options="loadItems"
@@ -55,15 +59,6 @@
             />
           </template>
         </Form>
-
-        <!-- <v-btn
-          density="comfortable"
-          icon="mdi-minus-circle-outline"
-          class="text-button ms-2"
-          variant="tonal"
-          color="error"
-        >
-        </v-btn> -->
       </template>
     </v-data-table-server>
   </v-card>

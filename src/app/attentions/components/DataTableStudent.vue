@@ -69,6 +69,7 @@
             />
           </template>
         </FormAttention>
+        <DeleteItem :id="item.id" @onSuccess="init" />
       </template>
     </v-data-table-server>
   </v-card>
@@ -78,6 +79,8 @@ import { onMounted, ref, Ref } from "vue";
 
 import type { DataTableResponse } from "@/common/types/data-table.types";
 import type { AttentionReport } from "@/app/attentions/types";
+
+import DeleteItem from "@/app/attentions/components/DeleteItem.vue";
 
 import {
   DataTableDefaultResponse,

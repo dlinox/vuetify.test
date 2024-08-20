@@ -4,6 +4,7 @@
       <v-tab value="student">Estudiantes</v-tab>
       <v-tab value="professor">Docentes</v-tab>
       <v-tab value="worker">Adminitrativos / CAS / Obras </v-tab>
+      <v-tab value="all">Todo </v-tab>
     </v-tabs>
   </v-toolbar>
 
@@ -26,6 +27,12 @@
         :offices="offices"
       />
     </v-tabs-window-item>
+    <v-tabs-window-item value="all">
+      <AllReportWindow
+        :type-attentions="typeAttentions"
+        :offices="offices"
+      />
+    </v-tabs-window-item>
   </v-tabs-window>
 </template>
 <script lang="ts" setup>
@@ -36,6 +43,7 @@ import { getTypeAttentions, getItemsOffices } from "@/app/attentions/services";
 import { SelectItem } from "@/common/types/select.types";
 import ProfessorReportWindow from "@/app/attentions/components/ProfessorReportWindow.vue";
 import WorkerReportWindow from "@/app/attentions/components/WorkerReportWindow.vue";
+import AllReportWindow from "@/app/attentions/components/AllReportWindow.vue";
 
 const typeAttentions: Ref<SelectItem[]> = ref([]);
 const offices: Ref<SelectItem[]> = ref([]);

@@ -43,6 +43,7 @@ import {
   VTabsWindowItem,
   VCombobox,
   VTextarea,
+  VAlert,
 } from "vuetify/components";
 
 export {
@@ -90,4 +91,5 @@ export {
   VTabsWindowItem,
   VCombobox,
   VTextarea,
+  VAlert,
 };

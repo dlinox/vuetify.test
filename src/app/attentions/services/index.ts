@@ -31,6 +31,16 @@ export const getItemsStudent = async (
   }
 };
 
+export const deleteItem = async (id: number): Promise<boolean> => {
+  try {
+    let token = localStorage.getItem("token") as string;
+    await http(token).delete("/attentions/" + id);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 //get attention person
 export const getHistoty = async (document: string): Promise<any[]> => {
   try {

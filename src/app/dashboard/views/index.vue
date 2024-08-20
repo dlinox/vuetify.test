@@ -30,7 +30,7 @@ import PerMonthGraph from "@/app/dashboard/components/PerMonthGraph.vue";
 const series : Ref<any[]> = ref([
   {
     name: "Estudiantes",
-    data: [1, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0],
+    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   },
 ]);
 

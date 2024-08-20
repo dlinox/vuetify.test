@@ -4,4 +4,10 @@ interface Office {
   status: boolean;
 }
 
-export type { Office };
+const OfficeDefaultValues: Office = {
+  id: null,
+  name: "",
+  status: true,
+};
+
+export { type Office, OfficeDefaultValues };

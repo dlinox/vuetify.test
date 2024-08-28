@@ -8,7 +8,6 @@ import {
   DataTableResponse,
 } from "@/common/types/data-table.types";
 import { AttentionReport } from "@/app/attentions/types";
-import { parse } from "vue/compiler-sfc";
 
 //getItemsStudent
 

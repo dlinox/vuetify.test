@@ -12,6 +12,17 @@
           >
             <v-icon>mdi-file-excel</v-icon>
           </v-btn>
+
+          <v-btn
+            icon
+            @click="exportPdf(items?.data)"
+            class="mr-2"
+            color="red"
+            variant="tonal"
+          >
+            <v-icon>mdi-file-excel</v-icon>
+          </v-btn>
+
           <v-text-field v-model="options.search" label="Buscar" />
         </v-col>
         <v-col cols="12" md="7" class="d-flex justify-end align-end">
@@ -87,7 +98,7 @@ import {
   DataTableDefaultOptions,
 } from "@/common/constants/data-table.constants";
 
-import { getItemsStudent } from "@/app/attentions/services";
+import { getItemsStudent, exportPdf } from "@/app/attentions/services";
 
 import FormAttention from "@/app/attentions/components/FormAttention.vue";
 import { SelectItem } from "@/common/types/select.types";

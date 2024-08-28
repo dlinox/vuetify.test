@@ -8,6 +8,7 @@ import {
   DataTableResponse,
 } from "@/common/types/data-table.types";
 import { AttentionReport } from "@/app/attentions/types";
+import { parse } from "vue/compiler-sfc";
 
 //getItemsStudent
 
@@ -39,7 +40,7 @@ export const deleteItem = async (id: number): Promise<boolean> => {
   } catch (error) {
     return false;
   }
-}
+};
 
 //get attention person
 export const getHistoty = async (document: string): Promise<any[]> => {
@@ -161,4 +162,55 @@ export const getItemsOffices = async (): Promise<SelectItem[]> => {
     console.error(error);
     return [];
   }
+};
+
+/*
+const exportPdf = async () => {
+  let res = await fetch("http://127.0.0.1:8000/api/pdf/report", {
+    method: "POST",
+  });
+
+  let resBlod = await res.blob();
+
+  var url = window.URL.createObjectURL(resBlod);
+
+  // Create a link element to trigger the download
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "downloaded.pdf"; // Set the desired file name
+  document.body.appendChild(a);
+
+  // Trigger a click event on the link element to initiate the download
+  a.click();
+
+  // Clean up by revoking the blob URL and removing the link element
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+};
+*/
+
+export const exportPdf = async (data: any): Promise<void> => {
+  console.log(data);
+
+  // Hacer la solicitud POST utilizando Axios
+  let response = await http().post("/pdf/report", data, {
+    responseType: "blob", // Necesario para obtener el blob directamente
+  });
+
+  let responseBlod = await response.data;
+
+  let url = window.URL.createObjectURL(responseBlod);
+
+  // Create a link element to trigger the download
+  var a = document.createElement("a");
+  a.href = url;
+  a.download = "downloaded.pdf"; // Set the desired file name
+  document.body.appendChild(a);
+
+  // Trigger a click event on the link element to initiate the download
+  a.click();
+
+  // Clean up by revoking the blob URL and removing the link element
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(a);
 };

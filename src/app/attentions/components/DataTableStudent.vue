@@ -20,7 +20,7 @@
             color="red"
             variant="tonal"
           >
-            <v-icon>mdi-file-excel</v-icon>
+            <v-icon>mdi-file-pdf-box</v-icon>
           </v-btn>
 
           <v-text-field v-model="options.search" label="Buscar" />

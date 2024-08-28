@@ -8,10 +8,8 @@ import {
   DataTableResponse,
 } from "@/common/types/data-table.types";
 import { AttentionReport } from "@/app/attentions/types";
-import { parse } from "vue/compiler-sfc";
 
 //getItemsStudent
-
 export const getItemsStudent = async (
   options: DataTableOptions,
   type: string
@@ -164,53 +162,35 @@ export const getItemsOffices = async (): Promise<SelectItem[]> => {
   }
 };
 
-/*
-const exportPdf = async () => {
-  let res = await fetch("http://127.0.0.1:8000/api/pdf/report", {
-    method: "POST",
-  });
-
-  let resBlod = await res.blob();
-
-  var url = window.URL.createObjectURL(resBlod);
-
-  // Create a link element to trigger the download
-  var a = document.createElement("a");
-  a.href = url;
-  a.download = "downloaded.pdf"; // Set the desired file name
-  document.body.appendChild(a);
-
-  // Trigger a click event on the link element to initiate the download
-  a.click();
-
-  // Clean up by revoking the blob URL and removing the link element
-  window.URL.revokeObjectURL(url);
-  document.body.removeChild(a);
-};
-*/
-
 export const exportPdf = async (data: any): Promise<void> => {
   console.log(data);
 
-  // Hacer la solicitud POST utilizando Axios
-  let response = await http().post("/pdf/report", data, {
-    responseType: "blob", // Necesario para obtener el blob directamente
-  });
+  try {
+    // Hacer la solicitud POST utilizando Axios
+    let response = await http().post("/pdf/report", data, {
+      responseType: "blob", // Necesario para obtener el blob directamente
+    });
 
-  let responseBlod = await response.data;
+    console.log(response);
 
-  let url = window.URL.createObjectURL(responseBlod);
+    let responseBlod = await response.data;
 
-  // Create a link element to trigger the download
-  var a = document.createElement("a");
-  a.href = url;
-  a.download = "downloaded.pdf"; // Set the desired file name
-  document.body.appendChild(a);
+    let url = window.URL.createObjectURL(responseBlod);
 
-  // Trigger a click event on the link element to initiate the download
-  a.click();
+    // Create a link element to trigger the download
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "downloaded.pdf"; // Set the desired file name
+    document.body.appendChild(a);
 
-  // Clean up by revoking the blob URL and removing the link element
-  window.URL.revokeObjectURL(url);
-  document.body.removeChild(a);
+    // Trigger a click event on the link element to initiate the download
+    a.click();
+
+    // Clean up by revoking the blob URL and removing the link element
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  } catch (error) {
+    console.error("Error al generar o descargar el PDF:", error);
+    // Manejar el error de forma adecuada, mostrar un mensaje al usuario, etc.
+  }
 };

@@ -32,6 +32,14 @@ export const user = async () => {
   const authStore = useAuthStore();
   try {
     let token = localStorage.getItem("token") as string;
+
+
+    if (!token){
+      localStorage.removeItem("token");
+      authStore.clearAuthState();
+      return;
+    }
+
     let response = await http(token).get(`auth/user`);
     authStore.setAuthState(response.data);
     return response.data;

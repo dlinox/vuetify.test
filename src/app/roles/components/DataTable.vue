@@ -9,6 +9,7 @@
                 v-bind="activator"
                 color="primary"
                 icon="mdi-plus-circle-outline"
+                v-permission="['roles.create']"
                 class="me-2"
               />
             </template>
@@ -38,6 +39,7 @@
                 density="comfortable"
                 icon="mdi-pencil"
                 class="text-button"
+                v-permission="['roles.update']"
                 variant="tonal"
               />
             </template>

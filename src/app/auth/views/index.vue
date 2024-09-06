@@ -6,12 +6,7 @@
       class="h-md-auto h-screen d-flex align-center justify-center mx-auto bg-white w-100 w-md-auto"
     >
       <v-card-item class="">
-        <v-img
-          src="https://campus.unap.edu.pe/images/themes/unap/logo.png"
-          alt="UNAP"
-          width="250px"
-          class="mb-6"
-        />
+        <v-img src="/sso-logo.jpg" alt="UNAP" width="150px" class="mb-6 mx-auto" />
 
         <div class="mb-6">
           <h3>Bienvenido</h3>

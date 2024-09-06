@@ -3,13 +3,19 @@
     <v-card-item>
       <v-row justify="space-between">
         <v-col cols="12" md="5" class="d-flex justify-end align-end">
-          <Form @onSuccess="loadItems(options)" :offices="officeItems" :roles="roleItems">
+          <Form
+            @onSuccess="loadItems(options)"
+            :offices="officeItems"
+            :roles="roleItems"
+          >
             <template v-slot:btn="{ activator }">
               <v-btn
                 v-bind="activator"
                 color="primary"
                 icon="mdi-plus-circle-outline"
                 class="me-2"
+                v-permission="['users.create']"
+                v-tooltip="'Nuevo Registro'"
               />
             </template>
           </Form>
@@ -44,7 +50,12 @@
         </v-chip>
       </template>
       <template v-slot:item.actions="{ item }">
-        <Form :form-state="item" @onSuccess="loadItems(options)" :offices="officeItems" :roles="roleItems">
+        <Form
+          :form-state="item"
+          @onSuccess="loadItems(options)"
+          :offices="officeItems"
+          :roles="roleItems"
+        >
           <template v-slot:btn="{ activator }">
             <v-btn
               v-bind="activator"
@@ -52,10 +63,11 @@
               icon="mdi-pencil"
               class="text-button"
               variant="tonal"
+              v-permission="['users.update']"
+              v-tooltip="'Editar Registro'"
             />
           </template>
         </Form>
-
       </template>
     </v-data-table-server>
   </v-card>

@@ -4,12 +4,16 @@
       <slot name="btn" :activator="activatorProps"></slot>
     </template>
     <template v-slot:default="{ isActive }">
-      <v-form @submit.prevent="submit(isActive)">
+      <v-form @submit.prevent="submit(isActive)" ref="formRef">
         <v-card :title="form.id ? 'Editar' : 'Crear'">
           <v-card-item>
             <v-row>
               <v-col cols="12">
-                <v-text-field v-model="form.name" label="Nombre" />
+                <v-text-field
+                  v-model="form.name"
+                  label="Nombre del rol"
+                  :rules="[required]"
+                />
               </v-col>
               <v-col cols="12">
                 <v-select
@@ -40,6 +44,7 @@
 <script setup lang="ts">
 import { ref, Ref } from "vue";
 import type { Role } from "@/app/roles/types";
+import { required } from "@/common/utils/ruleUtils";
 
 import { saveItem, updateItem } from "@/app/roles/services";
 
@@ -57,6 +62,8 @@ const props = defineProps({
   },
 });
 
+const formRef = ref<HTMLFormElement | null>(null);
+
 const form: Ref<Role> = ref({
   id: null,
   name: "",
@@ -65,6 +72,9 @@ const form: Ref<Role> = ref({
 });
 
 const submit = async (isActive: Ref<boolean>) => {
+  const { valid } = await formRef.value?.validate();
+  if (!valid) return;
+
   loading.value = true;
   if (form.value.id) {
     if (await updateItem(form.value)) {

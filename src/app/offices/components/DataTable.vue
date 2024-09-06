@@ -9,15 +9,12 @@
                 v-bind="activator"
                 color="primary"
                 icon="mdi-plus-circle-outline"
+                v-permission="['offices.create']"
                 class="me-2"
               />
             </template>
           </Form>
-          <v-text-field
-            v-model="options.search"
-            
-            label="Buscar"
-          />
+          <v-text-field v-model="options.search" label="Buscar" />
         </v-col>
         <v-col cols="12" md="2">
           <v-select
@@ -56,6 +53,7 @@
               icon="mdi-pencil"
               class="text-button"
               variant="tonal"
+              v-permission="['offices.update']"
             />
           </template>
         </Form>

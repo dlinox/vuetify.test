@@ -10,6 +10,7 @@
                 color="primary"
                 icon="mdi-plus-circle-outline"
                 class="me-2"
+                v-permission="['type-attentions.create']"
               />
             </template>
           </Form>
@@ -52,6 +53,7 @@
               icon="mdi-pencil"
               class="text-button"
               variant="tonal"
+              v-permission="['type-attentions.update']"
             />
           </template>
         </Form>

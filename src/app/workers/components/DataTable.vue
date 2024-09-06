@@ -3,9 +3,10 @@
     <v-card-item>
       <v-row justify="space-between">
         <v-col cols="12" md="5" class="d-flex justify-end align-end">
-          <Form @onSuccess="loadItems(options)" v-if="false">
+          <Form @onSuccess="loadItems(options)" :offices="offices">
             <template v-slot:btn="{ activator }">
               <v-btn
+                v-permission="['workers.create']"
                 v-bind="activator"
                 color="primary"
                 icon="mdi-plus-circle-outline"
@@ -15,7 +16,16 @@
           </Form>
           <v-text-field v-model="options.search" label="Buscar" />
         </v-col>
-        <v-col cols="12" md="2">
+
+        <v-col cols="12" md="5" class="d-flex justify-end align-end">
+          <v-select
+            v-model="options.filters.type"
+            label="Tipo"
+            :items="typeItems"
+            clearable
+            class="me-2"
+            @update:model-value="loadItems(options)"
+          />
           <v-select
             v-model="options.filters.status"
             label="Estado"
@@ -44,9 +54,14 @@
         </v-chip>
       </template>
       <template v-slot:item.actions="{ item }">
-        <Form :form-state="item" @onSuccess="loadItems(options)" v-if="false">
+        <Form
+          :form-state="item"
+          @onSuccess="loadItems(options)"
+          :offices="offices"
+        >
           <template v-slot:btn="{ activator }">
             <v-btn
+              v-permission="['workers.update']"
               v-bind="activator"
               density="comfortable"
               icon="mdi-pencil"
@@ -79,9 +94,10 @@ import {
   DataTableDefaultOptions,
 } from "@/common/constants/data-table.constants";
 
-import { getItems } from "@/app/workers/services";
+import { getItems, getItemsOffices } from "@/app/workers/services";
 
 import Form from "@/app/workers/components/Form.vue";
+import { SelectItem } from "@/common/types/select.types";
 
 const headers = [
   {
@@ -100,6 +116,11 @@ const headers = [
     value: "maternal_surname",
   },
   {
+    title: "Tipo",
+    sortable: true,
+    value: "type_name",
+  },
+  {
     title: "Estado",
     sortable: true,
     value: "status",
@@ -115,8 +136,17 @@ const statusItems = [
   { title: "Inactivo", value: false },
 ];
 
+const typeItems = [
+  { title: "Administrativo", value: "001" },
+  { title: "Cas", value: "002" },
+  { title: "Obrero", value: "003" },
+  { title: "Profecional de Obra", value: "004" },
+];
+
 const loading = ref(false);
 const options = ref({ ...DataTableDefaultOptions });
+
+const offices: Ref<SelectItem[]> = ref([]);
 
 const items: Ref<DataTableResponse<Worker> | null> = ref({
   ...DataTableDefaultResponse,
@@ -131,6 +161,7 @@ const loadItems = async (options: any) => {
 
 const init = async () => {
   await loadItems(options.value);
+  offices.value = await getItemsOffices();
 };
 
 onMounted(init);

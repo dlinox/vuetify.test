@@ -8,6 +8,7 @@ import type {
 import { DataTableDefaultResponse } from "@/common/constants/data-table.constants";
 
 import type { Worker } from "@/app/workers/types";
+import { SelectItem } from "@/common/types/select.types";
 
 export const getItems = async (
   options: DataTableOptions
@@ -41,5 +42,18 @@ export const updateItem = async (item: Worker): Promise<boolean> => {
   } catch (error) {
     console.error(error);
     return false;
+  }
+};
+
+
+// ------------------ COMMON ------------------
+export const getItemsOffices = async (): Promise<SelectItem[]> => {
+  try {
+    let token = localStorage.getItem("token") as string;
+    let response = await http(token).get("/selects/offices");
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
   }
 };

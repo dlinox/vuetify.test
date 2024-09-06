@@ -1,0 +1,1 @@
+const n=t=>!!t||"Obligatorio",o=t=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t)||"Correo electrónico no válido",r=t=>/^[0-9]{8}$/.test(t)||"DNI no válido",s=t=>e=>!!e||!!t||"Al menos un apellido (Paterno o Materno) es obligatorio";export{s as a,r as d,o as e,n as r};

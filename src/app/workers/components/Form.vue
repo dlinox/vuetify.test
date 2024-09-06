@@ -4,13 +4,67 @@
       <slot name="btn" :activator="activatorProps"></slot>
     </template>
     <template v-slot:default="{ isActive }">
-      <v-form @submit.prevent="submit(isActive)">
+      <v-form @submit.prevent="submit(isActive)" ref="formRef">
         <v-card :title="form.id ? 'Editar' : 'Crear'">
           <v-card-item>
             <v-row>
-              <v-col cols="12">
-                <v-text-field v-model="form.name" label="Nombre" />
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="form.document_number"
+                  label="DNI"
+                  :rules="[required, dni]"
+                />
               </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field v-model="form.code" label="Código Trabajador" />
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="form.name"
+                  label="Nombre"
+                  :rules="[required]"
+                />
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="form.paternal_surname"
+                  label="Apellido Paterno"
+                  :rules="[atLeastOneRequired(form.maternal_surname)]"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="form.maternal_surname"
+                  label="Apellido Materno"
+                  :rules="[atLeastOneRequired(form.paternal_surname)]"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <v-select
+                  v-model="form.type"
+                  :items="typeItems"
+                  label="Tipo de Trabajador"
+                  :rules="[required]"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <v-combobox
+                  v-model="form.office_id"
+                  :items="[
+                    {
+                      value: null,
+                      title: 'Todas las oficinas (no seleccionar ninguna)',
+                    },
+                    ...offices,
+                  ]"
+                  label="Oficina"
+                  :return-object="false"
+                ></v-combobox>
+              </v-col>
+
               <v-col cols="12">
                 <v-switch
                   :label="form.status ? 'Activo' : 'Inactivo'"
@@ -42,15 +96,31 @@ import { type Worker, WorkerDefault } from "@/app/workers/types";
 
 import { saveItem, updateItem } from "@/app/workers/services";
 
+import { required, dni, atLeastOneRequired } from "@/common/utils/ruleUtils";
+
 const emit = defineEmits(["onSuccess"]);
 
-const loading = ref(false);
 const props = defineProps({
   formState: {
     type: Object as () => Partial<Worker>,
     default: () => ({}),
   },
+  offices: {
+    type: Array as () => any[],
+    default: () => [],
+  },
 });
+
+const loading = ref(false);
+
+const typeItems = [
+  { title: "Administrativo", value: "001" },
+  { title: "Cas", value: "002" },
+  { title: "Obrero", value: "003" },
+  { title: "Profecional de Obra", value: "004" },
+];
+
+const formRef = ref<HTMLFormElement | null>(null);
 
 const form: Ref<Worker> = ref({
   ...WorkerDefault,
@@ -58,6 +128,9 @@ const form: Ref<Worker> = ref({
 });
 
 const submit = async (isActive: Ref<boolean>) => {
+  const { valid } = await formRef.value?.validate();
+  if (!valid) return;
+
   loading.value = true;
   if (form.value.id) {
     if (await updateItem(form.value)) {

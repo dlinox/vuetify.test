@@ -4,4 +4,10 @@ interface TypeAtention {
   status: boolean;
 }
 
-export type { TypeAtention };
+const TypeAtentionDefaultValues: TypeAtention = {
+  id: null,
+  name: "",
+  status: true,
+};
+
+export { type TypeAtention, TypeAtentionDefaultValues };

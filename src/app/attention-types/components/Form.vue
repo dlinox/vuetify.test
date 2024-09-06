@@ -4,12 +4,16 @@
       <slot name="btn" :activator="activatorProps"></slot>
     </template>
     <template v-slot:default="{ isActive }">
-      <v-form @submit.prevent="submit(isActive)">
+      <v-form @submit.prevent="submit(isActive)" ref="formRef">
         <v-card :title="form.id ? 'Editar' : 'Crear'">
           <v-card-item>
             <v-row>
               <v-col cols="12">
-                <v-text-field v-model="form.name" label="Nombre" />
+                <v-text-field
+                  v-model="form.name"
+                  label="Nombre"
+                  :rules="[required]"
+                />
               </v-col>
               <v-col cols="12">
                 <v-switch
@@ -38,9 +42,14 @@
 </template>
 <script setup lang="ts">
 import { ref, Ref } from "vue";
-import type { TypeAtention } from "@/app/attention-types/types";
+import {
+  type TypeAtention,
+  TypeAtentionDefaultValues,
+} from "@/app/attention-types/types";
 
 import { saveItem, updateItem } from "@/app/attention-types/services";
+
+import { required } from "@/common/utils/ruleUtils";
 
 const emit = defineEmits(["onSuccess"]);
 
@@ -52,33 +61,25 @@ const props = defineProps({
   },
 });
 
+const formRef = ref<HTMLFormElement | null>(null);
+
 const form: Ref<TypeAtention> = ref({
-  id: null,
-  name: "",
-  status: true,
+  ...TypeAtentionDefaultValues,
   ...props.formState,
 });
 
 const submit = async (isActive: Ref<boolean>) => {
+  const { valid } = await formRef.value?.validate();
+  if (!valid) return;
   loading.value = true;
   if (form.value.id) {
     if (await updateItem(form.value)) {
-      form.value = {
-        id: null,
-        name: "",
-        status: true,
-      };
-
       emit("onSuccess");
       isActive.value = false;
     }
   } else {
     if (await saveItem(form.value)) {
-      form.value = {
-        id: null,
-        name: "",
-        status: true,
-      };
+      form.value = { ...TypeAtentionDefaultValues };
 
       emit("onSuccess");
       isActive.value = false;

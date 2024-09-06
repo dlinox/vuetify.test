@@ -4,31 +4,40 @@
       <slot name="btn" :activator="activatorProps"></slot>
     </template>
     <template v-slot:default="{ isActive }">
-      <v-form @submit.prevent="submit(isActive)">
+      <v-form ref="formRef" @submit.prevent="submit(isActive)">
         <v-card :title="form.id ? 'Editar' : 'Crear'">
           <v-card-item>
             <v-row>
               <v-col cols="12" md="4">
-                <v-text-field v-model="form.document_number" label="DNI" />
+                <v-text-field
+                  v-model.trim="form.document_number"
+                  label="DNI"
+                  :rules="[required, dni]"
+                />
               </v-col>
               <v-col cols="12" md="8">
-                <v-text-field v-model="form.name" label="Nombre" />
-              </v-col>
-              <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="form.paternal_surname"
-                  label="Apellido Paterno"
+                  v-model.trim="form.name"
+                  label="Nombre"
+                  :rules="[required]"
                 />
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field
-                  v-model="form.maternal_surname"
+                  v-model.trim="form.paternal_surname"
+                  label="Apellido Paterno"
+                  :rules="[atLeastOneRequired(form.maternal_surname)]"
+                />
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model.trim="form.maternal_surname"
                   label="Apellido Materno"
+                  :rules="[atLeastOneRequired(form.paternal_surname)]"
                 />
               </v-col>
 
               <v-col cols="12">
-                {{ form.office_id }}
                 <v-combobox
                   v-model="form.office_id"
                   :items="[
@@ -47,6 +56,7 @@
 
               <v-col cols="12">
                 <v-select
+                  :rules="[required]"
                   v-model="form.role_id"
                   :items="roles"
                   label="Rol"
@@ -54,11 +64,15 @@
               </v-col>
 
               <v-col cols="12">
-                <v-text-field v-model="form.email" label="Correo" />
+                <v-text-field
+                  v-model.trim="form.email"
+                  label="Correo"
+                  :rules="[required, email]"
+                />
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                  v-model="form.password"
+                  v-model.trim="form.password"
                   label="Contraseña"
                   type="password"
                   autocomplete="off"
@@ -68,7 +82,7 @@
                 <v-switch
                   :label="form.status ? 'Activo' : 'Inactivo'"
                   v-model="form.status"
-                  color="blue-darken-4"
+                  color="primary"
                   inset
                 />
               </v-col>
@@ -95,6 +109,13 @@ import { type User, UserDefault } from "@/app/users/types";
 
 import { saveItem, updateItem } from "@/app/users/services";
 
+import {
+  required,
+  email,
+  dni,
+  atLeastOneRequired,
+} from "@/common/utils/ruleUtils";
+
 const emit = defineEmits(["onSuccess"]);
 
 const loading = ref(false);
@@ -114,13 +135,17 @@ const props = defineProps({
   },
 });
 
+const formRef: Ref<any | null> = ref(null);
 const form: Ref<User> = ref({
   ...UserDefault,
   ...props.formState,
 });
 
 const submit = async (isActive: Ref<boolean>) => {
+  const { valid } = await formRef.value.validate();
+  if (!valid) return;
   loading.value = true;
+
   if (form.value.id) {
     if (await updateItem(form.value)) {
       // form.value = { ...UserDefault };

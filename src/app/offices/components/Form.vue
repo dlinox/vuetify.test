@@ -4,33 +4,27 @@
       <slot name="btn" :activator="activatorProps"></slot>
     </template>
     <template v-slot:default="{ isActive }">
-      <v-form @submit.prevent="submit(isActive)">
+      <v-form @submit.prevent="submit(isActive)" ref="formRef">
         <v-card :title="form.id ? 'Editar' : 'Crear'">
           <v-card-item>
             <v-row>
               <v-col cols="12">
-                <v-text-field v-model="form.name" label="Nombre" />
+                <v-text-field
+                  v-model="form.name"
+                  label="Nombre"
+                  :rules="[required]"
+                />
               </v-col>
               <v-col cols="12">
-                <v-list-item
-                  lines="two"
-                  class="rounded-lg"
-                  :active="form.status"
-                  @click="form.status = !form.status"
-                >
-                  <template v-slot:prepend="{ isActive }">
-                    <v-list-item-action start>
-                      <v-checkbox-btn :model-value="isActive"></v-checkbox-btn>
-                    </v-list-item-action>
-                  </template>
-                  <v-list-item-title> Habilitado </v-list-item-title>
-                  <v-list-item-subtitle>
-                    <small>
-                      Habilitar esta opción permitirá que este elemento sea
-                      visible y seleccionable en otros formularios.
-                    </small>
-                  </v-list-item-subtitle>
-                </v-list-item>
+                <v-switch
+                  :label="form.status ? 'Activo' : 'Inactivo'"
+                  v-model="form.status"
+                  color="primary"
+                  inset
+                  hint="Habilitar esta opción permitirá que este elemento sea
+                      visible y seleccionable en otros formularios."
+                  persistent-hint
+                />
               </v-col>
             </v-row>
           </v-card-item>
@@ -62,9 +56,9 @@ import { type Office, OfficeDefaultValues } from "@/app/offices/types";
 
 import { saveItem, updateItem } from "@/app/offices/services";
 
+import { required } from "@/common/utils/ruleUtils";
 const emit = defineEmits(["onSuccess"]);
 
-const loading = ref(false);
 const props = defineProps({
   formState: {
     type: Object as () => Partial<Office>,
@@ -72,28 +66,34 @@ const props = defineProps({
   },
 });
 
+const loading = ref(false);
+
+const formRef = ref<HTMLFormElement | null>(null);
+
 const form: Ref<Office> = ref({
   ...OfficeDefaultValues,
   ...props.formState,
 });
 
 const submit = async (isActive: Ref<boolean>) => {
+  const { valid } = await formRef.value?.validate();
+
+  if (!valid) return;
+
   loading.value = true;
   if (form.value.id) {
     if (await updateItem(form.value)) {
-      // form.value = { ...OfficeDefaultValues };
       emit("onSuccess");
       isActive.value = false;
     }
   } else {
     if (await saveItem(form.value)) {
-      // form.value = { ...OfficeDefaultValues };
+      form.value = { ...OfficeDefaultValues };
       emit("onSuccess");
       isActive.value = false;
     }
   }
 
   loading.value = false;
-
 };
 </script>

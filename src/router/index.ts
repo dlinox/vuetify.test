@@ -55,7 +55,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "students",
-        name: "Students",
+        name: "Estudiantes",
         component: () => import("@/app/students/views/index.vue"),
       },
       {

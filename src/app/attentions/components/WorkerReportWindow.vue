@@ -1,9 +1,14 @@
 <template>
-  <DataTableStudent :type-attentions="typeAttentions" :offices="offices" type="003" />
+  <DataTableWorker
+    :type-attentions="typeAttentions"
+    :offices="offices"
+    :users="users"
+    type="003"
+  />
 </template>
 <script lang="ts" setup>
-import DataTableStudent from "@/app/attentions/components/DataTableStudent.vue";
-import { SelectItem } from "@/common/types/select.types";   
+import DataTableWorker from "@/app/attentions/components/DataTableWorker.vue";
+import { SelectItem } from "@/common/types/select.types";
 
 defineProps({
   typeAttentions: {
@@ -11,6 +16,10 @@ defineProps({
     default: () => [],
   },
   offices: {
+    type: Array as () => SelectItem[],
+    default: () => [],
+  },
+  users: {
     type: Array as () => SelectItem[],
     default: () => [],
   },

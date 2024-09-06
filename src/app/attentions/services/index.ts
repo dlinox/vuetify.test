@@ -194,3 +194,17 @@ export const exportPdf = async (data: any): Promise<void> => {
     // Manejar el error de forma adecuada, mostrar un mensaje al usuario, etc.
   }
 };
+
+
+// common
+
+export const getItemsUsers = async () : Promise<SelectItem[]> => {
+  try {
+    let token = localStorage.getItem("token") as string;
+    let response = await http(token).get("/selects/users");
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}

@@ -2,6 +2,7 @@
   <DataTableStudent
     :type-attentions="typeAttentions"
     :offices="offices"
+    :users="users"
     type="001"
   />
 </template>
@@ -15,6 +16,10 @@ defineProps({
     default: () => [],
   },
   offices: {
+    type: Array as () => SelectItem[],
+    default: () => [],
+  },
+  users: {
     type: Array as () => SelectItem[],
     default: () => [],
   },

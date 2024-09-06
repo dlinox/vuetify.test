@@ -36,6 +36,26 @@
             class="mr-2"
             @update:model-value="loadItems(options)"
           />
+          <v-select
+            v-model="options.filters.unit_code"
+            :items="careersItems"
+            label="Carrera"
+            dense
+            outlined
+            clearable
+            class="mr-2"
+            @update:model-value="loadItems(options)"
+          />
+          <v-select
+            v-model="options.filters.user_id"
+            :items="users"
+            label="Usuario"
+            dense
+            outlined
+            clearable
+            class="mr-2"
+            @update:model-value="loadItems(options)"
+          />
           <v-btn
             color="primary"
             @click="loadItems(options)"
@@ -91,6 +111,8 @@ import { onMounted, ref, Ref } from "vue";
 import type { DataTableResponse } from "@/common/types/data-table.types";
 import type { AttentionReport } from "@/app/attentions/types";
 
+import { careers } from "@/common/constants/careers";
+
 import DeleteItem from "@/app/attentions/components/DeleteItem.vue";
 
 import {
@@ -109,6 +131,7 @@ import ExportJsonExcel from "js-export-excel";
 const props = defineProps<{
   typeAttentions: SelectItem[];
   offices: SelectItem[];
+  users: SelectItem[];
   type: string;
 }>();
 
@@ -197,6 +220,12 @@ const headers = [
   },
 ];
 
+const careersItems: any = ref(
+  careers.map((item: any) => {
+    return { value: item.code, title: item.name };
+  })
+);
+
 const loading = ref(false);
 const options = ref({ ...DataTableDefaultOptions });
 
@@ -213,6 +242,7 @@ const loadItems = async (options: any) => {
 
 const init = async () => {
   await loadItems(options.value);
+  
 };
 
 onMounted(init);

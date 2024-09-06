@@ -165,4 +165,3 @@ export const fakeStudents = [
     career_name: "INGENIERÍA AGRÍCOLA",
   },
 ];
-

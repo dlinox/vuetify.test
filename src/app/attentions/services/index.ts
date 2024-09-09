@@ -10,10 +10,8 @@ import {
 import { AttentionReport } from "@/app/attentions/types";
 
 //GET STUDENT FROM OTI SERVICE
-export const getStudentByCode = async (code: string): Promise<any> => {
+export const _getStudentByCode = async (code: string): Promise<any> => {
   try {
-    // Route::get('/student/by-code/{code}', [StudentController::class, 'getStudentByCode']);
-
     const token = localStorage.getItem("token") as string;
 
     let response = await http(token).get(`/attentions/student/by-code/${code}`);
@@ -22,6 +20,26 @@ export const getStudentByCode = async (code: string): Promise<any> => {
     return null;
   }
 };
+
+export const getStudentByCode = async (code: string): Promise<any> => {
+  try {
+    const token =
+      "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1NmRiMThjMS00ODU1LTg4ODgtYzI5ZS0wMDAwM2ZhMTkxNTYiLCJzdWIiOiJGRUE5MDVDRS0zRDYxLTExRUYtOEM1Qy0wMDUwNTY4OTAwM0QiLCJleHAiOjE3NTIwMDQ0MTYsIm5iZiI6MTcyMDQ2ODQxNywiaWF0IjoxNzIwNDY4NDE2LCJqdGkiOiJNVGN5TURRMk9EUXhOZz09In0.BGiW_HKnnyImObXWytQLi_c93TgutdoJdhW7fYwNuKsEvIDbahe0DbsJaIwHtdTj1EYaqPp_fcz8IbxfHIftsw" as string;
+
+    let response = await http(token).get(
+      `http://service5.unap.edu.pe/CONSULTAS_BIENESTAR/v1/student/byCode/${code}/`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+//
 
 //getItemsStudent
 export const getItemsStudent = async (
@@ -34,8 +52,6 @@ export const getItemsStudent = async (
       "/attentions/items-students/" + type,
       options
     );
-
-    console.log(response.data);
 
     return response.data;
   } catch (error) {

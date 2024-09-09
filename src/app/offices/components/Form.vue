@@ -19,7 +19,7 @@
                 <v-switch
                   :label="form.status ? 'Activo' : 'Inactivo'"
                   v-model="form.status"
-                  color="primary"
+                  color="blue-darken-4"
                   inset
                   hint="Habilitar esta opción permitirá que este elemento sea
                       visible y seleccionable en otros formularios."
@@ -32,6 +32,7 @@
             <v-btn
               class="text-overline"
               text="Cancel"
+              color="secondary"
               @click="isActive.value = false"
             >
             </v-btn>

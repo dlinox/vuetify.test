@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="tonal">
+  <v-card >
     <v-toolbar density="compact">
       <v-tabs v-model="tab">
         <v-tab value="attention">

@@ -9,6 +9,7 @@ const DataTableDefaultOptions: DataTableOptions = {
   search: "",
   filters: {},
   sortBy: [],
+  groupBy: "",
 };
 
 const DataTableDefaultResponse: DataTableResponse<any> = {

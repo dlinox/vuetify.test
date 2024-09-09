@@ -71,14 +71,13 @@
   </v-card>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, Ref } from "vue";
+import {  ref, Ref } from "vue";
 
 import type { DataTableResponse } from "@/common/types/data-table.types";
 import type { TypeAtention } from "@/app/attention-types/types";
 
 import {
   DataTableDefaultResponse,
-  DataTableDefaultOptions,
 } from "@/common/constants/data-table.constants";
 
 import { getItems } from "@/app/attention-types/services";
@@ -108,7 +107,17 @@ const statusItems = [
 ];
 
 const loading = ref(false);
-const options = ref({ ...DataTableDefaultOptions });
+
+
+
+const options = ref({
+  page: 1,
+  itemsPerPage: 10,
+  search: "",
+  filters: {} as any,
+  sortBy: [],
+  groupBy: "",
+});
 
 const items: Ref<DataTableResponse<TypeAtention> | null> = ref({
   ...DataTableDefaultResponse,
@@ -121,9 +130,4 @@ const loadItems = async (options: any) => {
   loading.value = false;
 };
 
-const init = async () => {
-  await loadItems(options.value);
-};
-
-onMounted(init);
 </script>

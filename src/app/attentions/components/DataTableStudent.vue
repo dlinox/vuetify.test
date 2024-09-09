@@ -100,13 +100,13 @@
             />
           </template>
         </FormAttention>
-        <DeleteItem :id="item.id" @onSuccess="init" />
+        <DeleteItem :id="item.id" @onSuccess="loadItems" />
       </template>
     </v-data-table-server>
   </v-card>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, Ref } from "vue";
+import { ref, Ref } from "vue";
 
 import type { DataTableResponse } from "@/common/types/data-table.types";
 import type { AttentionReport } from "@/app/attentions/types";
@@ -117,7 +117,6 @@ import DeleteItem from "@/app/attentions/components/DeleteItem.vue";
 
 import {
   DataTableDefaultResponse,
-  DataTableDefaultOptions,
 } from "@/common/constants/data-table.constants";
 
 import { getItemsStudent, exportPdf } from "@/app/attentions/services";
@@ -227,7 +226,14 @@ const careersItems: any = ref(
 );
 
 const loading = ref(false);
-const options = ref({ ...DataTableDefaultOptions });
+
+const options = ref({
+  page: 1,
+  itemsPerPage: 10,
+  search: "",
+  filters: {} as any,
+  sortBy: [],
+});
 
 const items: Ref<DataTableResponse<AttentionReport> | null> = ref({
   ...DataTableDefaultResponse,
@@ -240,10 +246,5 @@ const loadItems = async (options: any) => {
   loading.value = false;
 };
 
-const init = async () => {
-  await loadItems(options.value);
-  
-};
 
-onMounted(init);
 </script>

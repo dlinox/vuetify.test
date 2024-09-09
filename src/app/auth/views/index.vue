@@ -1,12 +1,20 @@
 <template>
-  <div class="d-flex align-center justify-center h-screen">
+  <div
+    class="d-flex align-center justify-center h-screen bg-gradient-to-r from-primary to-secondary"
+  >
     <v-card
       elevation="0"
-      rounded="lg"
-      class="h-md-auto h-screen d-flex align-center justify-center mx-auto bg-white w-100 w-md-auto"
+      rounded="xl"
+      class="mx-auto bg-white pa-3"
+      max-width="450px"
     >
       <v-card-item class="">
-        <v-img src="/sso-logo.jpg" alt="UNAP" width="150px" class="mb-6 mx-auto" />
+        <v-img
+          src="/sso-logo.jpg"
+          alt="UNAP"
+          width="150px"
+          class="mb-6 mx-auto"
+        />
 
         <div class="mb-6">
           <h3>Bienvenido</h3>
@@ -35,12 +43,23 @@
             </v-col>
 
             <v-col cols="12">
-              <v-btn color="primary" block :loading="loading" type="submit">
+              <v-btn
+                class="text-overline font-weight-bold"
+                variant="tonal"
+                block
+                :loading="loading"
+                type="submit"
+              >
                 Ingresar
               </v-btn>
             </v-col>
           </v-row>
         </v-form>
+      </v-card-item>
+      <v-card-item class="w-100 text-center">
+        <div class="text-overline text-grey-darken-1">
+          <small> UNAP © {{ new Date().getFullYear() }} </small>
+        </div>
       </v-card-item>
     </v-card>
   </div>

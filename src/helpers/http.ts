@@ -14,9 +14,13 @@ export const http = (
     headers: token !== "" ? { Authorization: `Bearer ${token}` } : {},
   });
 
-  // Interceptor para manejar respuestas con error
   axiosInstance.interceptors.response.use(
-    (response) => response, // Deja pasar la respuesta si no hay error
+    (response) => {
+      if (response.data.message) {
+        toast.success(response.data.message);
+      }
+      return response;
+    },
     (error: any) => {
       toast.error(error.response?.data.message || "Error desconocido");
       return Promise.reject(error);

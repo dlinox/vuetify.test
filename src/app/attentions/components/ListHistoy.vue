@@ -56,7 +56,12 @@
           <v-btn color="secondary" type="button" @click="dialogSend = false">
             <small> cancelar </small>
           </v-btn>
-          <v-btn color="primary" type="button" @click="confirmSendSurvey()">
+          <v-btn
+            color="primary"
+            type="button"
+            @click="confirmSendSurvey()"
+            :loading="loading"
+          >
             <small> Enviar </small>
           </v-btn>
         </v-card-actions>
@@ -91,10 +96,10 @@ const formSend = ref({
   email: props.person?.email,
 });
 
+const loading = ref(false);
 const sendSurvey = async (item: any) => {
   dialogSend.value = true;
   formSend.value.attention_id = item.id;
-  console.log("sendSurvey");
 };
 
 const confirmSendSurvey = async () => {
@@ -108,9 +113,10 @@ const confirmSendSurvey = async () => {
     alert("Correo no válido");
     return;
   }
-
+  loading.value = true;
   await sendEmail(formSend.value);
-  console.log("confirmSendSurvey");
+  loading.value = false;
+  dialogSend.value = false;
 };
 
 const init = async () => {

@@ -14,7 +14,11 @@
               />
             </template>
           </Form>
-          <v-text-field v-model="options.search" label="Buscar" />
+          <v-text-field
+            v-model="searchQuery"
+            label="Buscar"
+            @input="debounceSearch"
+          />
         </v-col>
         <v-col cols="12" md="2">
           <v-select
@@ -53,6 +57,7 @@
               icon="mdi-pencil"
               class="text-button"
               variant="tonal"
+              color="black"
               v-permission="['offices.update']"
             />
           </template>
@@ -62,15 +67,12 @@
   </v-card>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, Ref } from "vue";
+import { ref, Ref } from "vue";
 
 import type { DataTableResponse } from "@/common/types/data-table.types";
 import type { Office } from "@/app/offices/types";
 
-import {
-  DataTableDefaultResponse,
-  DataTableDefaultOptions,
-} from "@/common/constants/data-table.constants";
+import { DataTableDefaultResponse } from "@/common/constants/data-table.constants";
 
 import { getItems } from "@/app/offices/services";
 
@@ -99,11 +101,27 @@ const statusItems = [
 ];
 
 const loading = ref(false);
-const options = ref({ ...DataTableDefaultOptions });
+
+const options = ref({
+  page: 1,
+  itemsPerPage: 10,
+  search: "",
+  filters: {} as any,
+  sortBy: [],
+});
 
 const items: Ref<DataTableResponse<Office> | null> = ref({
   ...DataTableDefaultResponse,
 });
+
+const searchQuery = ref(options.value.search);
+let debounceTimeout: number | undefined;
+const debounceSearch = () => {
+  if (debounceTimeout) clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    options.value.search = searchQuery.value;
+  }, 400);
+};
 
 const loadItems = async (options: any) => {
   loading.value = true;
@@ -111,10 +129,4 @@ const loadItems = async (options: any) => {
   items.value = await getItems(options.value);
   loading.value = false;
 };
-
-const init = async () => {
-  await loadItems(options.value);
-};
-
-onMounted(init);
 </script>

@@ -1,7 +1,18 @@
-
 export default {
+  VCard: {
+    VCardActions: {
+      class: "pa-4",
+      VBtn: {
+        variant: "tonal",
+        rounded: "lg",
+        color: "primary",
+        class: "px-6 text-sm",
+      },
+    },
+  },
   VBtn: {
     color: "primary",
+    style: "font-size: 14px",
     rounded: "lg",
     variant: "flat",
     size: "large",

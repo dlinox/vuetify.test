@@ -23,9 +23,8 @@ interface DataTableOptions {
   itemsPerPage: number;
   filters: Record<string, any>;
   search?: string;
-  sortBy?: DataTableSort[]
+  sortBy?: DataTableSort[];
   groupBy?: string;
-
 }
 
 export type { DataTableResponse, DataTableOptions };

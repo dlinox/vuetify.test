@@ -89,7 +89,11 @@
             </v-row>
           </v-card-item>
           <v-card-actions>
-            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+            <v-btn
+              text="Cancelar"
+              @click="isActive.value = false"
+              color="secondary"
+            ></v-btn>
             <v-spacer></v-spacer>
             <v-btn
               text="Guardar"
@@ -118,12 +122,11 @@ import {
 
 const emit = defineEmits(["onSuccess"]);
 
-const loading = ref(false);
 const props = defineProps({
   formState: {
     type: Object as () => Partial<User>,
   },
-
+  
   offices: {
     type: Array as () => any[],
     default: () => [],
@@ -134,6 +137,8 @@ const props = defineProps({
     default: () => [],
   },
 });
+
+const loading = ref(false);
 
 const formRef: Ref<any | null> = ref(null);
 const form: Ref<User> = ref({

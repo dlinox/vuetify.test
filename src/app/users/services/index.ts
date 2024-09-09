@@ -10,13 +10,24 @@ import type { SelectItem } from "@/common/types/select.types";
 import { DataTableDefaultResponse } from "@/common/constants/data-table.constants";
 
 import type { User } from "@/app/users/types";
+import axios from "axios";
 
 export const getItems = async (
   options: DataTableOptions
 ): Promise<DataTableResponse<User>> => {
   try {
     let token = localStorage.getItem("token") as string;
-    let response = await http(token).post("/users/items", options);
+    // let response = await http(token).post("/users/items", options);
+    //axios
+    let response = await axios.post(
+      "http://localhost:8000/api" + "/users/items",
+      options,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     return response.data;
   } catch (error) {

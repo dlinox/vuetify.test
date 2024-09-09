@@ -1,4 +1,4 @@
-import { http, httpOTI } from "@/helpers/http";
+import { http } from "@/helpers/http";
 
 import { type Student } from "@/app/students/types";
 import { SelectItem } from "@/common/types/select.types";
@@ -12,7 +12,11 @@ import { AttentionReport } from "@/app/attentions/types";
 //GET STUDENT FROM OTI SERVICE
 export const getStudentByCode = async (code: string): Promise<any> => {
   try {
-    let response = await httpOTI.get(`/${code}/`);
+    // Route::get('/student/by-code/{code}', [StudentController::class, 'getStudentByCode']);
+
+    const token = localStorage.getItem("token") as string;
+
+    let response = await http(token).get(`/attentions/student/by-code/${code}`);
     return response.data;
   } catch (error) {
     return null;

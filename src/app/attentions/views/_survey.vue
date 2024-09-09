@@ -40,6 +40,37 @@
             >La encuesta no existe, el enlace no es válido o ha expirado.</span
           >
         </v-alert>
+        <v-alert type="info" variant="tonal" v-else-if="form.score">
+          <span>
+            Ya has respondido la encuesta, gracias por tu tiempo.
+
+            {{
+              form.score === 5
+                ? "Nos alegra que estés muy satisfecho con nuestro servicio."
+                : ""
+            }}
+            {{
+              form.score === 4
+                ? "Nos alegra que estés satisfecho con nuestro servicio."
+                : ""
+            }}
+            {{
+              form.score === 3
+                ? "Gracias por tu respuesta. Tomamos nota para seguir mejorando."
+                : ""
+            }}
+            {{
+              form.score === 2
+                ? "Lamentamos que no hayas quedado satisfecho. Trabajaremos en ello."
+                : ""
+            }}
+            {{
+              form.score === 1
+                ? "Sentimos que tu experiencia no haya sido buena. ¡Queremos mejorar!"
+                : ""
+            }}
+          </span>
+        </v-alert>
 
         <v-form @submit.prevent="submit" ref="formRef" v-else>
           <v-row>

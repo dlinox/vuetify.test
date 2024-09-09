@@ -42,7 +42,6 @@
       :loading="loading"
       item-value="id"
       items-per-page-text="Número de filas por página:"
-      @update:options="loadItems"
     >
       <template v-slot:item.status="{ item }">
         <v-chip :color="item.status ? 'info' : 'error'">
@@ -80,7 +79,7 @@ import type { User } from "@/app/users/types";
 
 import {
   DataTableDefaultResponse,
-  DataTableDefaultOptions,
+  // DataTableDefaultOptions,
 } from "@/common/constants/data-table.constants";
 
 import { getItems, getItemsOffices, getItemsRoles } from "@/app/users/services";
@@ -136,7 +135,14 @@ const statusItems = [
 ];
 
 const loading = ref(false);
-const options = ref({ ...DataTableDefaultOptions });
+const options = ref({
+  page: 1,
+  itemsPerPage: 10,
+  search: "",
+  filters: {} as any,
+  sortBy: [],
+  groupBy: "",
+});
 
 const items: Ref<DataTableResponse<User> | null> = ref({
   ...DataTableDefaultResponse,

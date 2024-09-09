@@ -46,7 +46,7 @@
       :loading="loading"
       item-value="id"
       items-per-page-text="Número de filas por página:"
-      @update:options="loadItems"
+      @update:options="loadItems(options)"
     >
       <template v-slot:item.status="{ item }">
         <v-chip :color="item.status ? 'info' : 'error'">
@@ -160,7 +160,6 @@ const loadItems = async (options: any) => {
 };
 
 const init = async () => {
-  await loadItems(options.value);
   offices.value = await getItemsOffices();
 };
 

@@ -21,7 +21,7 @@
             label="Estado"
             :items="statusItems"
             clearable
-            @update:model-value="loadItems(options)"
+            @update:model-value="loadItems"
           />
         </v-col>
       </v-row>
@@ -44,7 +44,7 @@
         </v-chip>
       </template>
       <template v-slot:item.actions="{ item }">
-        <Form :form-state="item" @onSuccess="loadItems(options)" v-if="false">
+        <Form :form-state="item" @onSuccess="loadItems" v-if="false">
           <template v-slot:btn="{ activator }">
             <v-btn
               v-bind="activator"
@@ -69,15 +69,12 @@
   </v-card>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, Ref } from "vue";
+import { ref, Ref } from "vue";
 
 import type { DataTableResponse } from "@/common/types/data-table.types";
 import type { Professor } from "@/app/professors/types";
 
-import {
-  DataTableDefaultResponse,
-  DataTableDefaultOptions,
-} from "@/common/constants/data-table.constants";
+import { DataTableDefaultResponse } from "@/common/constants/data-table.constants";
 
 import { getItems } from "@/app/professors/services";
 
@@ -116,7 +113,13 @@ const statusItems = [
 ];
 
 const loading = ref(false);
-const options = ref({ ...DataTableDefaultOptions });
+const options = ref({
+  page: 1,
+  itemsPerPage: 10,
+  search: "",
+  filters: {} as any,
+  sortBy: [],
+});
 
 const items: Ref<DataTableResponse<Professor> | null> = ref({
   ...DataTableDefaultResponse,
@@ -128,10 +131,4 @@ const loadItems = async (options: any) => {
   items.value = await getItems(options.value);
   loading.value = false;
 };
-
-const init = async () => {
-  await loadItems(options.value);
-};
-
-onMounted(init);
 </script>

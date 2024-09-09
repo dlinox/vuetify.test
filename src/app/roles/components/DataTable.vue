@@ -28,11 +28,14 @@
       :loading="loading"
       item-value="id"
       items-per-page-text="Número de filas por página:"
-      @update:options="loadItems"
     >
       <template v-slot:item.actions="{ item }">
         <div class="d-flex justify-end">
-          <Form :form-state="item" @onSuccess="loadItems(options)" :permissions="permissions">
+          <Form
+            :form-state="item"
+            @onSuccess="loadItems(options)"
+            :permissions="permissions"
+          >
             <template v-slot:btn="{ activator }">
               <v-btn
                 v-bind="activator"
@@ -47,7 +50,6 @@
         </div>
       </template>
     </v-data-table-server>
-
   </v-card>
 </template>
 <script setup lang="ts">
@@ -58,7 +60,6 @@ import type { Role } from "@/app/roles/types";
 
 import {
   DataTableDefaultResponse,
-  DataTableDefaultOptions,
 } from "@/common/constants/data-table.constants";
 
 import { getItems, getPermissions } from "@/app/roles/services";
@@ -79,7 +80,14 @@ const headers = [
 ];
 
 const loading = ref(false);
-const options = ref({ ...DataTableDefaultOptions });
+const options = ref({
+  page: 1,
+  itemsPerPage: 10,
+  search: "",
+  filters: {},
+  sortBy: [],
+  groupBy: "",
+});
 
 const permissions: Ref<any[]> = ref([]);
 

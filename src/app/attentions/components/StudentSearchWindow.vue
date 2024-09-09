@@ -1,18 +1,20 @@
 <template>
   <v-row justify="center">
     <v-col cols="8" md="6" class="mt-8">
-      <v-text-field
-        v-model="search"
-        label="Buscar"
-        class="w-80"
-        @update:model-value="searchStudent"
-      >
-        <template v-slot:append-inner>
-          <v-btn icon size="small" @click="searchStudent">
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
-        </template>
-      </v-text-field>
+      <v-form ref="formRef" @submit.prevent="searchStudent">
+        <v-text-field
+          v-model="search"
+          label="Buscar por código de estudiante"
+          class="w-80"
+          :rules="rules"
+        >
+          <template v-slot:append-inner>
+            <v-btn icon size="small" @click="searchStudent">
+              <v-icon>mdi-magnify</v-icon>
+            </v-btn>
+          </template>
+        </v-text-field>
+      </v-form>
     </v-col>
     <v-col cols="12">
       <v-list>
@@ -25,12 +27,10 @@
             <v-icon>mdi-account</v-icon>
           </template>
           <v-list-item-title>
-            {{ student.document_number }} | {{ student.name }}
-            {{ student.paternal_surname }}
-            {{ student.maternal_surname }}
+            {{ student.document }} | {{ student.fullName }}
           </v-list-item-title>
           <v-list-item-subtitle>
-            {{ student.career_name }} {{ student.student_code }}
+            [{{ student.studentCode }}] {{ student.professionalSchool }}
           </v-list-item-subtitle>
         </v-list-item>
       </v-list>
@@ -39,29 +39,32 @@
 </template>
 <script setup lang="ts">
 import { ref, Ref } from "vue";
-import { fakeStudents } from "@/common/constants/fake-students.ts";
-import { receiveStudent } from "@/app/attentions/services";
+import { receiveStudent, getStudentByCode } from "@/app/attentions/services";
 import { useRouter } from "vue-router";
+
 const router = useRouter();
+
 const search = ref("");
+const formRef = ref<HTMLFormElement | null>(null);
 
 const students: Ref<any[]> = ref([]);
 
-const FakeApi = async (search: string) => {
-  return fakeStudents.filter((student) => {
-    return student.document_number.toLowerCase().includes(search.toLowerCase());
-  });
-};
+// 6 digit only numbers
+const rules = [
+  (v: string) => !!v || "Este campo es requerido",
+  (v: string) => (v && v.length === 6) || "Debe tener 6 dígitos",
+  (v: string) => /^[0-9]*$/.test(v) || "Solo se permiten números",
+];
 
 const goToAttentionStudent = async (student: any) => {
   await receiveStudent(student);
-  router.push(`/a/attentions/student/${student.document_number}`);
+  router.push(`/a/attentions/student/${student.studentCode}`);
 };
 
 const searchStudent = async () => {
-  console.log(fakeStudents);
-  students.value = await FakeApi(search.value);
-  console.log(students);
-  //siular api con FakeStudents
+  const { valid } = await formRef.value!.validate();
+  if (!valid) return;
+  let response = await getStudentByCode(search.value);
+  students.value = [response.data];
 };
 </script>

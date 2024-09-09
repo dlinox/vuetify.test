@@ -23,30 +23,27 @@
             <v-col cols="10" md="8">
               <v-card-text>
                 <v-row justify="center">
-                  <v-col cols="10" md="8">
+                  <v-col cols="12" md="8">
                     <v-combobox
                       v-model="form.type_attention_id"
                       :items="typeAttentions"
                       label="Tipo de Atencion"
-                      outlined
                       :return-object="false"
-                      dense
+                      :rules="[required]"
                     />
                   </v-col>
                   <v-col cols="12" md="4">
                     <v-text-field
                       v-model="form.report_number"
                       label="Nro de Reporte"
-                      outlined
-                      dense
+                      :rules="[required]"
                     />
                   </v-col>
                   <v-col cols="12">
                     <v-textarea
                       v-model="form.description"
                       label="Descripcion"
-                      outlined
-                      dense
+                      :rules="[required]"
                     />
                   </v-col>
                   <v-col cols="12">
@@ -62,6 +59,10 @@
                 </v-row>
               </v-card-text>
               <v-card-actions>
+                <v-btn color="primary" type="button" link to="/a/attentions">
+                  Volver
+                </v-btn>
+
                 <v-spacer></v-spacer>
                 <v-btn color="primary" type="submit" variant="flat">
                   Guardar atención
@@ -73,7 +74,7 @@
       </v-tabs-window-item>
 
       <v-tabs-window-item value="history">
-        <ListHistoy :document="item?.document_number" />
+        <ListHistoy :document="item?.document_number" :person="item" person_type="002" />
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>
@@ -89,7 +90,7 @@ import {
   getItemsOffices,
   storeItem,
 } from "@/app/attentions/services";
-
+import { required } from "@/common/utils/ruleUtils";
 import { type Student } from "@/app/students/types";
 
 import { type Attention, AttentionDefault } from "@/app/attentions/types";
@@ -103,16 +104,23 @@ const offices: Ref<SelectItem[]> = ref([]);
 
 const item: Ref<Student | null> = ref(null);
 
+const formRef: Ref<HTMLFormElement | null> = ref(null);
+
 const form: Ref<Attention> = ref({
   ...AttentionDefault,
 });
 
 const submit = async () => {
+  const { valid } = await formRef.value?.validate();
+  if (!valid) return;
+
   let data = {
     ...form.value,
     person_id: item.value?.id,
   };
   await storeItem(data, "002");
+  formRef.value?.reset();
+
   form.value = { ...AttentionDefault };
 };
 

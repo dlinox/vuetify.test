@@ -1,6 +1,7 @@
-import { user } from "@/app/auth/services/auth.services";
+import { user, clearSession } from "@/app/auth/services/auth.services";
 
 import { NavigationGuardNext, RouteLocationNormalized } from "vue-router";
+
 export const authMiddleware = async (
   _to: RouteLocationNormalized,
   _from: RouteLocationNormalized,
@@ -9,8 +10,9 @@ export const authMiddleware = async (
   const auth = await user();
   if (!auth) {
     console.log("Redirecting to login page...");
+    await clearSession();
+
     next({ name: "Login" });
-    //window.location.href = import.meta.env.VITE_URL_API_UNAP_LOGIN;
   } else {
     next();
   }

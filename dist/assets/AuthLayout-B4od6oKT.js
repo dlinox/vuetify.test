@@ -1,1 +1,0 @@
-import{d as a,r as t,o,c as n,w as p,a as s,u as r,R as c}from"./index-DWJSz5qk.js";const f=a({__name:"AuthLayout",setup(u){return(_,m)=>{const e=t("v-app");return o(),n(e,{app:"",id:"auth-layout"},{default:p(()=>[s(r(c))]),_:1})}}});export{f as default};

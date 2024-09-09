@@ -33,8 +33,7 @@ export const user = async () => {
   try {
     let token = localStorage.getItem("token") as string;
 
-
-    if (!token){
+    if (!token) {
       localStorage.removeItem("token");
       authStore.clearAuthState();
       return;
@@ -52,4 +51,10 @@ export const user = async () => {
 
     return false;
   }
+};
+
+export const clearSession = async  () => {
+  const authStore = useAuthStore();
+  localStorage.removeItem("token");
+  authStore.clearAuthState();
 };

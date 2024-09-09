@@ -1,12 +1,6 @@
 <template>
-  <v-card>
+  <v-card variant="tonal">
     <v-toolbar density="compact">
-      <v-toolbar-title>
-        <small>
-          {{ student?.name }} {{ student?.paternal_surname }}
-          {{ student?.maternal_surname }}
-        </small>
-      </v-toolbar-title>
       <v-tabs v-model="tab">
         <v-tab value="attention">
           <small>Nueva Atencion</small>
@@ -16,6 +10,24 @@
         </v-tab>
       </v-tabs>
     </v-toolbar>
+    <v-card-title>
+      <small>
+        <v-icon class="mb-1"> mdi-account </v-icon>
+        {{ student?.full_name }}
+      </small>
+    </v-card-title>
+    <v-card-text class="border-b">
+      <p class="mb-3">
+        <v-icon> mdi-phone </v-icon>
+        {{ student?.phone_number }} | <v-icon> mdi-email </v-icon>
+        {{ student?.email }}
+      </p>
+
+      <p>
+        <v-icon> mdi-school </v-icon>
+        {{ student?.career_name }} | {{ student?.student_code }}
+      </p>
+    </v-card-text>
     <v-tabs-window v-model="tab">
       <v-tabs-window-item value="attention">
         <v-form ref="formRef" @submit.prevent="submit">
@@ -23,30 +35,27 @@
             <v-col cols="10" md="8">
               <v-card-text>
                 <v-row justify="center">
-                  <v-col cols="10" md="8">
+                  <v-col cols="12" md="8">
                     <v-combobox
                       v-model="form.type_attention_id"
                       :items="typeAttentions"
                       label="Tipo de Atencion"
-                      outlined
                       :return-object="false"
-                      dense
+                      :rules="[required]"
                     />
                   </v-col>
                   <v-col cols="12" md="4">
                     <v-text-field
                       v-model="form.report_number"
                       label="Nro de Reporte"
-                      outlined
-                      dense
+                      :rules="[required]"
                     />
                   </v-col>
                   <v-col cols="12">
                     <v-textarea
                       v-model="form.description"
                       label="Descripcion"
-                      outlined
-                      dense
+                      :rules="[required]"
                     />
                   </v-col>
                   <v-col cols="12">
@@ -62,6 +71,10 @@
                 </v-row>
               </v-card-text>
               <v-card-actions>
+                <v-btn color="primary" type="button" link to="/a/attentions">
+                  Volver
+                </v-btn>
+
                 <v-spacer></v-spacer>
                 <v-btn color="primary" type="submit" variant="flat">
                   Guardar atención
@@ -72,7 +85,7 @@
         </v-form>
       </v-tabs-window-item>
       <v-tabs-window-item value="history">
-        <ListHistoy :document="student?.document_number" />
+        <ListHistoy :document="student?.student_code" :person="student" person_type="001" />
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>
@@ -94,6 +107,8 @@ import { type Attention, AttentionDefault } from "@/app/attentions/types";
 import { SelectItem } from "@/common/types/select.types";
 import ListHistoy from "@/app/attentions/components/ListHistoy.vue";
 
+import { required } from "@/common/utils/ruleUtils";
+
 const route = useRoute();
 const tab = ref("attention");
 const typeAttentions: Ref<SelectItem[]> = ref([]);
@@ -105,12 +120,19 @@ const form: Ref<Attention> = ref({
   ...AttentionDefault,
 });
 
+const formRef: Ref<HTMLFormElement | null> = ref(null);
+
 const submit = async () => {
+  const { valid } = await formRef.value?.validate();
+  if (!valid) return;
+
   let data = {
     ...form.value,
     person_id: student.value?.id,
   };
   await storeItem(data, "001");
+
+  formRef.value?.reset();
   form.value = { ...AttentionDefault };
 };
 

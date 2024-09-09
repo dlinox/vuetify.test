@@ -2,7 +2,6 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 import { authMiddleware, noAuthMiddleware } from "@/middleware/auth";
 
-
 const routes: RouteRecordRaw[] = [
   {
     path: "/",
@@ -17,6 +16,20 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+
+  {
+    path: "/c",
+    name: "BlackLayout",
+    component: () => import("../layouts/AuthLayout.vue"),
+    children: [
+      {
+        path: "survey/:token",
+        name: "Survey",
+        component: () => import("@/app/attentions/views/_survey.vue"),
+      },
+    ],
+  },
+
   {
     path: "/a",
     name: "AdminLayout",

@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [vue()],
 
   optimizeDeps: {
-    exclude: ['chart.js/auto']
+    exclude: ["chart.js/auto"],
   },
   resolve: {
     alias: {

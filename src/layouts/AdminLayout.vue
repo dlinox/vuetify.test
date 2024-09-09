@@ -1,5 +1,6 @@
 <template>
   <v-app app>
+
     <v-navigation-drawer v-model="drawer" app>
       <AppMenu />
       <template #append>

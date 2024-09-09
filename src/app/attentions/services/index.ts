@@ -1,4 +1,4 @@
-import { http } from "@/helpers/http";
+import { http, httpOTI } from "@/helpers/http";
 
 import { type Student } from "@/app/students/types";
 import { SelectItem } from "@/common/types/select.types";
@@ -8,6 +8,16 @@ import {
   DataTableResponse,
 } from "@/common/types/data-table.types";
 import { AttentionReport } from "@/app/attentions/types";
+
+//GET STUDENT FROM OTI SERVICE
+export const getStudentByCode = async (code: string): Promise<any> => {
+  try {
+    let response = await httpOTI.get(`/${code}/`);
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
 
 //getItemsStudent
 export const getItemsStudent = async (
@@ -51,11 +61,11 @@ export const getHistoty = async (document: string): Promise<any[]> => {
   }
 };
 
-export const receiveStudent = async (data: Student): Promise<boolean> => {
+export const receiveStudent = async (data: any): Promise<boolean> => {
   try {
     let token = localStorage.getItem("token") as string;
     await http(token).post(
-      `/attentions/student/receive/${data.document_number}`,
+      `/attentions/student/receive/${data.studentCode}`,
       data
     );
     return true;
@@ -195,10 +205,9 @@ export const exportPdf = async (data: any): Promise<void> => {
   }
 };
 
-
 // common
 
-export const getItemsUsers = async () : Promise<SelectItem[]> => {
+export const getItemsUsers = async (): Promise<SelectItem[]> => {
   try {
     let token = localStorage.getItem("token") as string;
     let response = await http(token).get("/selects/users");
@@ -207,4 +216,35 @@ export const getItemsUsers = async () : Promise<SelectItem[]> => {
     console.error(error);
     return [];
   }
-}
+};
+
+export const sendEmail = async (data: any): Promise<boolean> => {
+  try {
+    let token = localStorage.getItem("token") as string;
+    await http(token).post("/survey/send-email", data);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+export const getSurvey = async (token: string): Promise<any> => {
+  try {
+    let response = await http().get(`/survey/${token}`);
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const responseSurvey = async (
+  data: any,
+  token: string
+): Promise<boolean> => {
+  try {
+    await http().put("/survey/response/" + token, data);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};

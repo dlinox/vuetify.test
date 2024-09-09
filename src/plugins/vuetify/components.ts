@@ -44,6 +44,8 @@ import {
   VCombobox,
   VTextarea,
   VAlert,
+  // v-progress-circular
+  VProgressCircular,
 } from "vuetify/components";
 
 export {
@@ -92,4 +94,5 @@ export {
   VCombobox,
   VTextarea,
   VAlert,
+  VProgressCircular,
 };

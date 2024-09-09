@@ -40,7 +40,7 @@
             >La encuesta no existe, el enlace no es válido o ha expirado.</span
           >
         </v-alert>
-        <v-alert type="info" variant="tonal" v-else-if="form.score">
+        <v-alert type="info" variant="tonal" v-else-if="survey.score">
           <span>
             Ya has respondido la encuesta, gracias por tu tiempo.
 

@@ -1,6 +1,10 @@
 <template>
   <v-row>
-    <v-col cols="12" md="6">
+    <v-col
+      cols="12"
+      md="6"
+      v-permission="['dashboard.attentions-by-month-and-type']"
+    >
       <v-card>
         <v-card-item>
           <apexchart
@@ -12,14 +16,14 @@
         </v-card-item>
       </v-card>
     </v-col>
-    <v-col cols="12" md="6">
+    <v-col
+      cols="12"
+      md="6"
+      v-permission="['dashboard.attentions-by-month-and-type']"
+    >
       <PerMonthGraph />
     </v-col>
   </v-row>
-
-  <pre>
-    {{ report }}
-  </pre>
 </template>
 <script setup lang="ts">
 import { Ref, ref } from "vue";
@@ -27,7 +31,7 @@ import { getAttentionsByMonth } from "@/app/dashboard/services";
 
 import PerMonthGraph from "@/app/dashboard/components/PerMonthGraph.vue";
 
-const series : Ref<any[]> = ref([
+const series: Ref<any[]> = ref([
   {
     name: "Estudiantes",
     data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -75,8 +79,6 @@ const options = ref({
     ],
   },
 });
-
-const report = ref(null);
 
 const getAttentionsByYear = async (year: number) => {
   series.value = await getAttentionsByMonth(year);

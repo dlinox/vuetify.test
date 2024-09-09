@@ -44,13 +44,13 @@
       <v-card class="rounded-0">
         <v-toolbar density="compact" title="Hoy">
           <v-spacer></v-spacer>
-          <v-btn
+          <!-- <v-btn
             link
             to="/a/attentions/reports"
             v-permission="['attentions.report']"
           >
             <small>ver todo</small>
-          </v-btn>
+          </v-btn> -->
         </v-toolbar>
         <v-list-item v-for="item in attentions" :key="item.id" class="border-t">
           <v-list-item-title>

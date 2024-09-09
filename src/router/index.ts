@@ -47,6 +47,11 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@/app/attentions/views/index.vue"),
       },
       {
+        path: "reports",
+        name: "Reportes",
+        component: () => import("@/app/reports/views/index.vue"),
+      },
+      {
         path: "attentions/student/:document",
         name: "Atención al Estudiantes",
         component: () => import("@/app/attentions/views/_student.vue"),
@@ -61,11 +66,11 @@ const routes: RouteRecordRaw[] = [
         name: "Atención al Trabajador",
         component: () => import("@/app/attentions/views/_worker.vue"),
       },
-      {
-        path: "attentions/reports",
-        name: "Reportes",
-        component: () => import("@/app/attentions/views/reports.vue"),
-      },
+      // {
+      //   path: "attentions/reports",
+      //   name: "Reportes",
+      //   component: () => import("@/app/attentions/views/reports.vue"),
+      // },
       {
         path: "students",
         name: "Estudiantes",

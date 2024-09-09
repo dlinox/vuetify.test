@@ -137,7 +137,15 @@ const loadingInit: Ref<boolean> = ref(false);
 const submit = async (): Promise<void> => {
   loading.value = true;
   try {
-    await responseSurvey(form.value, route.params.token as string);
+    const response = await responseSurvey(
+      form.value,
+      route.params.token as string
+    );
+
+    if (response) {
+      survey.value.score = form.value.score;
+      survey.value.comments = form.value.comments;
+    }
   } catch (error) {
     console.error(error);
   } finally {

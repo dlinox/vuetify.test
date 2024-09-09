@@ -19,6 +19,16 @@
     />
 
     <v-list-item
+      key="reports"
+      to="/a/reports"
+      title="Reportes"
+      prepend-icon="mdi-chart-line"
+      link
+      exact
+      v-permission="['reports']"
+    />
+
+    <v-list-item
       key="students"
       to="/a/students"
       title="Estudiantes"

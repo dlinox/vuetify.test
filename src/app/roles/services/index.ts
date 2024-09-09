@@ -8,29 +8,17 @@ import type {
 import { DataTableDefaultResponse } from "@/common/constants/data-table.constants";
 
 import type { Role } from "@/app/roles/types";
-import axios from "axios";
 
 export const getItems = async (
   options: DataTableOptions
 ): Promise<DataTableResponse<Role>> => {
   try {
     let token = localStorage.getItem("token") as string;
-    // let response = await http(token).post("/roles/items", options);
-
-    let response = await axios.post(
-      "http://localhost:8000/api" + "/roles/items",
-      options,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
+    let response = await http(token).post("/roles/items", options);
 
     for (let item of response.data.data) {
       item.permissions = item.permissions?.split(",");
-      item.permissions = item.permissions?.map((p:string) => parseInt(p));
+      item.permissions = item.permissions?.map((p: string) => parseInt(p));
     }
 
     return response.data;
@@ -50,8 +38,7 @@ export const getPermissions = async (): Promise<string[]> => {
     console.error(error);
     return [];
   }
-}
-
+};
 
 export const saveItem = async (item: Role): Promise<boolean> => {
   try {

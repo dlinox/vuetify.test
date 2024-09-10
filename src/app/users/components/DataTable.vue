@@ -21,7 +21,16 @@
           </Form>
           <v-text-field v-model="options.search" label="Buscar" />
         </v-col>
-        <v-col cols="12" md="2">
+        <v-col cols="12" md="7" class="d-flex justify-end align-end">
+          <v-select
+            v-model="options.filters.office_id"
+            label="Oficina"
+            :items="officeItems"
+            clearable
+            @update:model-value="loadItems(options)"
+            class="me-2"
+          />
+
           <v-select
             v-model="options.filters.status"
             label="Estado"
@@ -32,6 +41,7 @@
         </v-col>
       </v-row>
     </v-card-item>
+
     <v-data-table-server
       v-model:items-per-page="options.itemsPerPage"
       :headers="headers"
@@ -42,6 +52,7 @@
       :loading="loading"
       item-value="id"
       items-per-page-text="Número de filas por página:"
+      @update:options="loadItems"
     >
       <template v-slot:item.status="{ item }">
         <v-chip :color="item.status ? 'info' : 'error'">
@@ -122,7 +133,16 @@ const headers = [
     sortable: true,
     value: "status",
   },
-
+  {
+    title: "Rol",
+    sortable: true,
+    value: "role_name",
+  },
+  {
+    title: "Oficina",
+    sortable: true,
+    value: "office_name",
+  },
   {
     title: "",
     value: "actions",
@@ -156,7 +176,6 @@ const loadItems = async (options: any) => {
 };
 
 const init = async () => {
-  await loadItems(options.value);
   officeItems.value = await getItemsOffices();
   roleItems.value = await getItemsRoles();
 };

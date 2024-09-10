@@ -7,6 +7,7 @@ interface Attention {
   report_number: string;
   description: string;
   derivate_to: number[];
+  email: string;
 }
 
 const AttentionDefault: Attention = {
@@ -16,6 +17,7 @@ const AttentionDefault: Attention = {
   report_number: "",
   description: "",
   derivate_to: [],
+  email: "",
 };
 
 

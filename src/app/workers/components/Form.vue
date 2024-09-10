@@ -42,6 +42,14 @@
               </v-col>
 
               <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="form.email"
+                  label="Email"
+                  :rules="[required, email]"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
                 <v-select
                   v-model="form.type"
                   :items="typeItems"
@@ -96,7 +104,12 @@ import { type Worker, WorkerDefault } from "@/app/workers/types";
 
 import { saveItem, updateItem } from "@/app/workers/services";
 
-import { required, dni, atLeastOneRequired } from "@/common/utils/ruleUtils";
+import {
+  required,
+  dni,
+  atLeastOneRequired,
+  email,
+} from "@/common/utils/ruleUtils";
 
 const emit = defineEmits(["onSuccess"]);
 
@@ -118,6 +131,7 @@ const typeItems = [
   { title: "Cas", value: "002" },
   { title: "Obrero", value: "003" },
   { title: "Profecional de Obra", value: "004" },
+  { title: "EXTERNO", value: "000" },
 ];
 
 const formRef = ref<HTMLFormElement | null>(null);
@@ -134,15 +148,12 @@ const submit = async (isActive: Ref<boolean>) => {
   loading.value = true;
   if (form.value.id) {
     if (await updateItem(form.value)) {
-      form.value = { ...WorkerDefault };
-
       emit("onSuccess");
       isActive.value = false;
     }
   } else {
     if (await saveItem(form.value)) {
-      form.value = { ...WorkerDefault };
-
+      formRef.value?.reset();
       emit("onSuccess");
       isActive.value = false;
     }

@@ -13,6 +13,7 @@
                   v-model.trim="form.document_number"
                   label="DNI"
                   :rules="[required, dni]"
+                  autocomplete="off"
                 />
               </v-col>
               <v-col cols="12" md="8">
@@ -20,6 +21,7 @@
                   v-model.trim="form.name"
                   label="Nombre"
                   :rules="[required]"
+                  autocomplete="off"
                 />
               </v-col>
               <v-col cols="12" md="6">
@@ -27,6 +29,7 @@
                   v-model.trim="form.paternal_surname"
                   label="Apellido Paterno"
                   :rules="[atLeastOneRequired(form.maternal_surname)]"
+                  autocomplete="off"
                 />
               </v-col>
               <v-col cols="12" md="6">
@@ -34,6 +37,7 @@
                   v-model.trim="form.maternal_surname"
                   label="Apellido Materno"
                   :rules="[atLeastOneRequired(form.paternal_surname)]"
+                  autocomplete="off"
                 />
               </v-col>
 
@@ -48,9 +52,10 @@
                     ...offices,
                   ]"
                   label="Oficina"
-                  hint="Selecciona una oficina, si no seleccionas ninguna se asignará a todas las oficinas"
+                  hint="Si no seleccionas ninguna, podrá acceder a todas las oficinas [USUARIO ADMINISTRADOR]"
                   persistent-hint
                   :return-object="false"
+                  autocomplete="off"
                 ></v-combobox>
               </v-col>
 
@@ -60,6 +65,7 @@
                   v-model="form.role_id"
                   :items="roles"
                   label="Rol"
+                  autocomplete="off"
                 ></v-select>
               </v-col>
 
@@ -67,6 +73,7 @@
                 <v-text-field
                   v-model.trim="form.email"
                   label="Correo"
+                  autocomplete="off"
                   :rules="[required, email]"
                 />
               </v-col>
@@ -126,7 +133,7 @@ const props = defineProps({
   formState: {
     type: Object as () => Partial<User>,
   },
-  
+
   offices: {
     type: Array as () => any[],
     default: () => [],
@@ -153,15 +160,12 @@ const submit = async (isActive: Ref<boolean>) => {
 
   if (form.value.id) {
     if (await updateItem(form.value)) {
-      // form.value = { ...UserDefault };
-
       emit("onSuccess");
       isActive.value = false;
     }
   } else {
     if (await saveItem(form.value)) {
-      // form.value = { ...UserDefault };
-
+      formRef.value?.reset();
       emit("onSuccess");
       isActive.value = false;
     }

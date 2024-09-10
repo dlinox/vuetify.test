@@ -1,14 +1,14 @@
 interface Professor {
   id: number | null;
   name: string;
-  code: number  | null;
+  code: number | null;
   paternal_surname?: string;
   maternal_surname?: string;
   document_type: string;
   document_number: string;
   birthdate?: string;
   phone_number?: string;
-  career_code?: string;
+  career_code?: string | null;
   career_name?: string;
   position_id: number | null;
   position_name?: string;
@@ -29,7 +29,7 @@ const ProfessorDefault = {
   document_number: "",
   birthdate: "",
   phone_number: "",
-  career_code: "",
+  career_code: null,
   position_id: null,
   position_name: "",
   condition_id: null,

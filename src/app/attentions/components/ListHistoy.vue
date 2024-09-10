@@ -23,7 +23,7 @@
         <v-icon class="me-2"> mdi-calendar </v-icon>
         {{ item.created_at }}
       </v-card-text>
-      <v-card-actions class="d-flex justify-end">
+      <v-card-actions class="d-flex justify-end" v-if="false">
         <v-btn
           prepend-icon="mdi-send"
           color="orange"

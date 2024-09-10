@@ -14,6 +14,8 @@ interface Student {
   status: boolean;
   full_name?: string;
   career_name?: string;
+  mother_name?: string;
+  father_name?: string;
 }
 
 const StudentDefault = {

@@ -3,7 +3,7 @@
     <v-card-item>
       <v-row justify="space-between">
         <v-col cols="12" md="5" class="d-flex justify-end align-end">
-          <Form @onSuccess="loadItems(options)" :offices="offices">
+          <Form @onSuccess="loadItems" :offices="offices">
             <template v-slot:btn="{ activator }">
               <v-btn
                 v-permission="['workers.create']"
@@ -24,14 +24,14 @@
             :items="typeItems"
             clearable
             class="me-2"
-            @update:model-value="loadItems(options)"
+            @update:model-value="loadItems"
           />
           <v-select
             v-model="options.filters.status"
             label="Estado"
             :items="statusItems"
             clearable
-            @update:model-value="loadItems(options)"
+            @update:model-value="loadItems"
           />
         </v-col>
       </v-row>
@@ -46,7 +46,7 @@
       :loading="loading"
       item-value="id"
       items-per-page-text="Número de filas por página:"
-      @update:options="loadItems(options)"
+      @update:options="loadItems"
     >
       <template v-slot:item.status="{ item }">
         <v-chip :color="item.status ? 'info' : 'error'">
@@ -54,11 +54,7 @@
         </v-chip>
       </template>
       <template v-slot:item.actions="{ item }">
-        <Form
-          :form-state="item"
-          @onSuccess="loadItems(options)"
-          :offices="offices"
-        >
+        <Form :form-state="item" @onSuccess="loadItems" :offices="offices">
           <template v-slot:btn="{ activator }">
             <v-btn
               v-permission="['workers.update']"
@@ -84,7 +80,7 @@
   </v-card>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, Ref } from "vue";
+import { ref, Ref } from "vue";
 
 import type { DataTableResponse } from "@/common/types/data-table.types";
 import type { Worker } from "@/app/workers/types";
@@ -101,9 +97,14 @@ import { SelectItem } from "@/common/types/select.types";
 
 const headers = [
   {
-    title: "Nombre",
+    title: "DNI",
+    value: "document_number",
     sortable: true,
+  },
+  {
+    title: "Nombre",
     value: "name",
+    sortable: true,
   },
   {
     title: "Apellido Paterno",
@@ -114,6 +115,11 @@ const headers = [
     title: "Apellido Materno",
     sortable: true,
     value: "maternal_surname",
+  },
+  {
+    title: "Correo",
+    sortable: true,
+    value: "email",
   },
   {
     title: "Tipo",
@@ -152,9 +158,8 @@ const items: Ref<DataTableResponse<Worker> | null> = ref({
   ...DataTableDefaultResponse,
 });
 
-const loadItems = async (options: any) => {
+const loadItems = async () => {
   loading.value = true;
-  options.value = { ...options.value, ...options };
   items.value = await getItems(options.value);
   loading.value = false;
 };
@@ -163,5 +168,5 @@ const init = async () => {
   offices.value = await getItemsOffices();
 };
 
-onMounted(init);
+init();
 </script>

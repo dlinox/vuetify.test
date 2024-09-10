@@ -8,9 +8,58 @@
         <v-card :title="form.id ? 'Editar' : 'Crear'">
           <v-card-item>
             <v-row>
-              <v-col cols="12">
-                <v-text-field v-model="form.name" label="Nombre" />
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="form.document_number"
+                  label="DNI"
+                  :rules="[required, dni]"
+                />
               </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field v-model="form.code" label="Código Trabajador" />
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="form.name"
+                  label="Nombre"
+                  :rules="[required]"
+                />
+              </v-col>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="form.paternal_surname"
+                  label="Apellido Paterno"
+                  :rules="[atLeastOneRequired(form.maternal_surname)]"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="form.maternal_surname"
+                  label="Apellido Materno"
+                  :rules="[atLeastOneRequired(form.paternal_surname)]"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="form.email"
+                  label="Email"
+                  :rules="[required, email]"
+                />
+              </v-col>
+
+              <v-col cols="12" md="6">
+                <v-combobox
+                  v-model="form.career_code"
+                  :items="careers"
+                  label="Carrera"
+                  hint="Selecciona la carrera a la que pertenece"
+                  persistent-hint
+                  :return-object="false"
+                ></v-combobox>
+              </v-col>
+
               <v-col cols="12">
                 <v-switch
                   :label="form.status ? 'Activo' : 'Inactivo'"
@@ -42,6 +91,14 @@ import { type Professor, ProfessorDefault } from "@/app/professors/types";
 
 import { saveItem, updateItem } from "@/app/professors/services";
 
+
+import {
+  required,
+  email,
+  dni,
+  atLeastOneRequired,
+} from "@/common/utils/ruleUtils";
+
 const emit = defineEmits(["onSuccess"]);
 
 const loading = ref(false);
@@ -49,6 +106,10 @@ const props = defineProps({
   formState: {
     type: Object as () => Partial<Professor>,
     default: () => ({}),
+  },
+  careers: {
+    type: Array as () => any[],
+    default: () => [],
   },
 });
 

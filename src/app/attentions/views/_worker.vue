@@ -1,12 +1,6 @@
 <template>
   <v-card>
-    <v-toolbar density="compact">
-      <v-toolbar-title>
-        <small>
-          {{ item?.name }} {{ item?.paternal_surname }}
-          {{ item?.maternal_surname }}
-        </small>
-      </v-toolbar-title>
+    <v-toolbar>
       <v-tabs v-model="tab">
         <v-tab value="attention">
           <small>Nueva Atencion</small>
@@ -16,6 +10,25 @@
         </v-tab>
       </v-tabs>
     </v-toolbar>
+
+    <v-card-title>
+      <small>
+        {{ item?.name }} {{ item?.paternal_surname }}
+        {{ item?.maternal_surname }}
+      </small>
+    </v-card-title>
+    <v-card-text class="border-b">
+      <p class="mb-2">
+        <v-icon> mdi-phone </v-icon>
+        {{ item?.phone_number }} | <v-icon> mdi-email </v-icon>
+        {{ item?.email }}
+      </p>
+      <p class="mb-2">
+        <v-icon> mdi-school </v-icon>
+        {{ item?.office_name }} | {{ item?.code }}
+      </p>
+    </v-card-text>
+
     <v-tabs-window v-model="tab">
       <v-tabs-window-item value="attention">
         <v-form ref="formRef" @submit.prevent="submit">
@@ -23,6 +36,15 @@
             <v-col cols="10" md="8">
               <v-card-text>
                 <v-row justify="center">
+                  <v-col cols="12">
+                    <v-text-field
+                      v-model="form.email"
+                      label="Correo"
+                      :rules="[required, email]"
+                      hint="El correo es obligatorio, para el envio de correos, asegurese de que sea correcto."
+                      persistent-hint
+                    />
+                  </v-col>
                   <v-col cols="12" md="8">
                     <v-combobox
                       v-model="form.type_attention_id"
@@ -64,7 +86,12 @@
                 </v-btn>
 
                 <v-spacer></v-spacer>
-                <v-btn color="primary" type="submit" variant="flat">
+                <v-btn
+                  color="primary"
+                  type="submit"
+                  variant="flat"
+                  :loading="loading"
+                >
                   Guardar atención
                 </v-btn>
               </v-card-actions>
@@ -73,7 +100,11 @@
         </v-form>
       </v-tabs-window-item>
       <v-tabs-window-item value="history">
-        <ListHistoy :document="item?.document_number" :person="item" person_type="003" />
+        <ListHistoy
+          :document="item?.document_number"
+          :person="item"
+          person_type="003"
+        />
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>
@@ -89,42 +120,48 @@ import {
   getItemsOffices,
   storeItem,
 } from "@/app/attentions/services";
-import { type Student } from "@/app/students/types";
+import { type Worker } from "@/app/workers/types";
 
 import { type Attention, AttentionDefault } from "@/app/attentions/types";
 
 import { SelectItem } from "@/common/types/select.types";
-import { required } from "@/common/utils/ruleUtils";
+import { required, email } from "@/common/utils/ruleUtils";
 const route = useRoute();
 const tab = ref("attention");
 const typeAttentions: Ref<SelectItem[]> = ref([]);
 const offices: Ref<SelectItem[]> = ref([]);
 
-const item: Ref<Student | null> = ref(null);
+const item: Ref<Worker | null> = ref(null);
 
 const formRef: Ref<HTMLFormElement | null> = ref(null);
 const form: Ref<Attention> = ref({
   ...AttentionDefault,
 });
 
+const loading = ref(false);
 const submit = async () => {
   const { valid } = await formRef.value?.validate();
   if (!valid) return;
 
+  loading.value = true;
   let data = {
     ...form.value,
     person_id: item.value?.id,
+    person_type: "003",
   };
   await storeItem(data, "003");
-  formRef.value?.reset();
-  form.value = { ...AttentionDefault };
 
+  formRef.value?.reset();
+  item.value = await getWorkerByDocument(route.params.document as string);
+  form.value.email = item.value?.email || "";
+  loading.value = false;
 };
 
 const init = async () => {
   item.value = await getWorkerByDocument(route.params.document as string);
   typeAttentions.value = await getTypeAttentions();
   offices.value = await getItemsOffices();
+  form.value.email = item.value?.email || "";
 };
 
 init();

@@ -18,6 +18,33 @@
       v-permission="['attentions']"
     />
 
+    <v-list-group value="reports" v-permission="['reports']">
+      <template v-slot:activator="{ props }">
+        <v-list-item
+          v-bind="props"
+          prepend-icon="mdi-chart-line"
+          title="Reportes"
+        ></v-list-item>
+      </template>
+
+      <v-list-item
+        key="reports.attentions"
+        to="/a/reports"
+        title="Atenciones"
+        prepend-icon="mdi-chart-line"
+        link
+        exact
+      />
+      <v-list-item
+        key="reports.users"
+        to="/a/reports/users"
+        title="Usuarios"
+        prepend-icon="mdi-account"
+        link
+        exact
+      />
+    </v-list-group>
+    <!-- 
     <v-list-item
       key="reports"
       to="/a/reports"
@@ -26,7 +53,7 @@
       link
       exact
       v-permission="['reports']"
-    />
+    /> -->
 
     <v-list-item
       key="students"

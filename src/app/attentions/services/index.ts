@@ -8,6 +8,12 @@ import {
   DataTableResponse,
 } from "@/common/types/data-table.types";
 import { AttentionReport } from "@/app/attentions/types";
+import axios from "axios";
+
+import { useToast } from "vue-toast-notification";
+
+// Inicializar toast una vez al cargar el módulo
+const toast = useToast();
 
 //GET STUDENT FROM OTI SERVICE
 export const _getStudentByCode = async (code: string): Promise<any> => {
@@ -26,7 +32,7 @@ export const getStudentByCode = async (code: string): Promise<any> => {
     const token =
       "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1NmRiMThjMS00ODU1LTg4ODgtYzI5ZS0wMDAwM2ZhMTkxNTYiLCJzdWIiOiJGRUE5MDVDRS0zRDYxLTExRUYtOEM1Qy0wMDUwNTY4OTAwM0QiLCJleHAiOjE3NTIwMDQ0MTYsIm5iZiI6MTcyMDQ2ODQxNywiaWF0IjoxNzIwNDY4NDE2LCJqdGkiOiJNVGN5TURRMk9EUXhOZz09In0.BGiW_HKnnyImObXWytQLi_c93TgutdoJdhW7fYwNuKsEvIDbahe0DbsJaIwHtdTj1EYaqPp_fcz8IbxfHIftsw" as string;
 
-    let response = await http(token).get(
+    let response = await axios.get(
       `http://service5.unap.edu.pe/CONSULTAS_BIENESTAR/v1/student/byCode/${code}/`,
       {
         headers: {
@@ -36,6 +42,7 @@ export const getStudentByCode = async (code: string): Promise<any> => {
     );
     return response.data;
   } catch (error) {
+    toast.error("No se encontró al estudiante");
     return null;
   }
 };

@@ -16,6 +16,19 @@
                 />
               </v-col>
               <v-col cols="12">
+                <v-select
+                  v-model="form.type"
+                  :items="[
+                    { value: '001', title: 'Estudiante' },
+                    { value: '002', title: 'Docente' },
+                    { value: '003', title: 'Administrativo' },
+                  ]"
+                  label="Atencion para"
+                  :rules="[required]"
+                ></v-select>
+              </v-col>
+
+              <v-col cols="12">
                 <v-switch
                   :label="form.status ? 'Activo' : 'Inactivo'"
                   v-model="form.status"
@@ -79,19 +92,12 @@ const submit = async (isActive: Ref<boolean>) => {
     }
   } else {
     if (await saveItem(form.value)) {
-      form.value = { ...TypeAtentionDefaultValues };
-
+      formRef.value?.reset();
       emit("onSuccess");
       isActive.value = false;
     }
   }
 
   loading.value = false;
-
-  form.value = {
-    id: null,
-    name: "",
-    status: true,
-  };
 };
 </script>

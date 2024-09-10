@@ -1,6 +1,6 @@
 <template>
-  <v-card >
-    <v-toolbar density="compact">
+  <v-card>
+    <v-toolbar>
       <v-tabs v-model="tab">
         <v-tab value="attention">
           <small>Nueva Atencion</small>
@@ -17,15 +17,25 @@
       </small>
     </v-card-title>
     <v-card-text class="border-b">
-      <p class="mb-3">
+      <p class="mb-2">
         <v-icon> mdi-phone </v-icon>
         {{ student?.phone_number }} | <v-icon> mdi-email </v-icon>
         {{ student?.email }}
       </p>
 
-      <p>
+      <p class="mb-2">
         <v-icon> mdi-school </v-icon>
         {{ student?.career_name }} | {{ student?.student_code }}
+      </p>
+
+      <p class="mb-2">
+        <v-icon> mdi-human-male </v-icon>
+        {{ student?.father_name }}
+      </p>
+
+      <p class="mb-2">
+        <v-icon> mdi-human-female </v-icon>
+        {{ student?.mother_name }}
       </p>
     </v-card-text>
     <v-tabs-window v-model="tab">
@@ -35,6 +45,15 @@
             <v-col cols="10" md="8">
               <v-card-text>
                 <v-row justify="center">
+                  <v-col cols="12">
+                    <v-text-field
+                      v-model="form.email"
+                      label="Correo"
+                      :rules="[required, email]"
+                      hint="El correo es obligatorio, para el envio de correos, asegurese de que sea correcto."
+                      persistent-hint
+                    />
+                  </v-col>
                   <v-col cols="12" md="8">
                     <v-combobox
                       v-model="form.type_attention_id"
@@ -74,9 +93,13 @@
                 <v-btn color="primary" type="button" link to="/a/attentions">
                   Volver
                 </v-btn>
-
                 <v-spacer></v-spacer>
-                <v-btn color="primary" type="submit" variant="flat">
+                <v-btn
+                  color="primary"
+                  type="submit"
+                  variant="flat"
+                  :loading="loading"
+                >
                   Guardar atención
                 </v-btn>
               </v-card-actions>
@@ -85,7 +108,11 @@
         </v-form>
       </v-tabs-window-item>
       <v-tabs-window-item value="history">
-        <ListHistoy :document="student?.student_code" :person="student" person_type="001" />
+        <ListHistoy
+          :document="student?.student_code"
+          :person="student"
+          person_type="001"
+        />
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>
@@ -107,7 +134,7 @@ import { type Attention, AttentionDefault } from "@/app/attentions/types";
 import { SelectItem } from "@/common/types/select.types";
 import ListHistoy from "@/app/attentions/components/ListHistoy.vue";
 
-import { required } from "@/common/utils/ruleUtils";
+import { email, required } from "@/common/utils/ruleUtils";
 
 const route = useRoute();
 const tab = ref("attention");
@@ -119,6 +146,7 @@ const student: Ref<Student | null> = ref(null);
 const form: Ref<Attention> = ref({
   ...AttentionDefault,
 });
+const loading = ref(false);
 
 const formRef: Ref<HTMLFormElement | null> = ref(null);
 
@@ -126,20 +154,26 @@ const submit = async () => {
   const { valid } = await formRef.value?.validate();
   if (!valid) return;
 
+  loading.value = true;
   let data = {
     ...form.value,
     person_id: student.value?.id,
+    person_type: "001",
   };
   await storeItem(data, "001");
 
   formRef.value?.reset();
-  form.value = { ...AttentionDefault };
+  student.value = await getStudentByDocument(route.params.document as string);
+  form.value.email = student.value?.email || "";
+  loading.value = false;
 };
 
 const init = async () => {
   student.value = await getStudentByDocument(route.params.document as string);
   typeAttentions.value = await getTypeAttentions();
   offices.value = await getItemsOffices();
+
+  form.value.email = student.value?.email || "";
 };
 
 init();

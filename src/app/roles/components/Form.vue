@@ -27,7 +27,11 @@
             </v-row>
           </v-card-item>
           <v-card-actions>
-            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+            <v-btn
+              text="Cancelar"
+              color="secondary"
+              @click="isActive.value = false"
+            ></v-btn>
             <v-spacer></v-spacer>
             <v-btn
               text="Guardar"
@@ -78,23 +82,12 @@ const submit = async (isActive: Ref<boolean>) => {
   loading.value = true;
   if (form.value.id) {
     if (await updateItem(form.value)) {
-      form.value = {
-        id: null,
-        name: "",
-        permissions: [],
-      };
-
       emit("onSuccess");
       isActive.value = false;
     }
   } else {
     if (await saveItem(form.value)) {
-      form.value = {
-        id: null,
-        name: "",
-        permissions: [],
-      };
-
+      formRef.value?.reset();
       emit("onSuccess");
       isActive.value = false;
     }

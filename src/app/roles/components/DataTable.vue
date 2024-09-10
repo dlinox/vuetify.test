@@ -28,6 +28,7 @@
       :loading="loading"
       item-value="id"
       items-per-page-text="Número de filas por página:"
+      @update:options="loadItems"
     >
       <template v-slot:item.actions="{ item }">
         <div class="d-flex justify-end">
@@ -58,9 +59,7 @@ import { onMounted, ref, Ref } from "vue";
 import type { DataTableResponse } from "@/common/types/data-table.types";
 import type { Role } from "@/app/roles/types";
 
-import {
-  DataTableDefaultResponse,
-} from "@/common/constants/data-table.constants";
+import { DataTableDefaultResponse } from "@/common/constants/data-table.constants";
 
 import { getItems, getPermissions } from "@/app/roles/services";
 
@@ -103,7 +102,6 @@ const loadItems = async (options: any) => {
 };
 
 const init = async () => {
-  await loadItems(options.value);
   permissions.value = await getPermissions();
 };
 

@@ -3,9 +3,10 @@
     <v-card-item>
       <v-row justify="space-between">
         <v-col cols="12" md="5" class="d-flex justify-end align-end">
-          <Form @onSuccess="loadItems(options)" v-if="false">
+          <Form @onSuccess="loadItems(options)" :careers="careerItems">
             <template v-slot:btn="{ activator }">
               <v-btn
+                v-permission="['professors.create']"
                 v-bind="activator"
                 color="primary"
                 icon="mdi-plus-circle-outline"
@@ -26,6 +27,7 @@
         </v-col>
       </v-row>
     </v-card-item>
+
     <v-data-table-server
       v-model:items-per-page="options.itemsPerPage"
       :headers="headers"
@@ -55,15 +57,6 @@
             />
           </template>
         </Form>
-
-        <!-- <v-btn
-          density="comfortable"
-          icon="mdi-minus-circle-outline"
-          class="text-button ms-2"
-          variant="tonal"
-          color="error"
-        >
-        </v-btn> -->
       </template>
     </v-data-table-server>
   </v-card>
@@ -80,7 +73,13 @@ import { getItems } from "@/app/professors/services";
 
 import Form from "@/app/professors/components/Form.vue";
 
+import { careers } from "@/common/constants/careers";
 const headers = [
+  {
+    title: "DNI",
+    value: "document_number",
+    sortable: true,
+  },
   {
     title: "Nombre",
     sortable: true,
@@ -97,6 +96,15 @@ const headers = [
     value: "maternal_surname",
   },
   {
+    title: "Correo",
+    sortable: true,
+    value: "email",
+  },
+  {
+    title: "Escuela Profesional",
+    value: "career_name",
+  },
+  {
     title: "Estado",
     sortable: true,
     value: "status",
@@ -106,6 +114,11 @@ const headers = [
     value: "actions",
   },
 ];
+
+const careerItems = careers.map((career) => ({
+  title: career.name,
+  value: career.code,
+}));
 
 const statusItems = [
   { title: "Activo", value: true },

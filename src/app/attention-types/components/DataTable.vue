@@ -16,7 +16,20 @@
           </Form>
           <v-text-field v-model="options.search" label="Buscar" />
         </v-col>
-        <v-col cols="12" md="2">
+        <v-col cols="12" md="5" class="d-flex justify-end align-end">
+          <v-select
+            v-model="options.filters.type"
+            :items="[
+              { value: '001', title: 'Estudiante' },
+              { value: '002', title: 'Docente' },
+              { value: '003', title: 'Administrativo' },
+            ]"
+            label="Atencion para"
+            clearable
+            class="me-2"
+            @update:model-value="loadItems(options)"
+          ></v-select>
+
           <v-select
             v-model="options.filters.status"
             label="Estado"
@@ -39,6 +52,25 @@
       items-per-page-text="Número de filas por página:"
       @update:options="loadItems"
     >
+      <template v-slot:item.type="{ item }">
+        <v-chip
+          :color="
+            item.type === '001'
+              ? 'deep-purple-lighten-2'
+              : item.type === '002'
+              ? 'indigo-lighten-2'
+              : 'cyan-darken-1'
+          "
+        >
+          {{
+            item.type === "001"
+              ? "Estudiante"
+              : item.type === "002"
+              ? "Docente"
+              : "Administrativo"
+          }}
+        </v-chip>
+      </template>
       <template v-slot:item.status="{ item }">
         <v-chip :color="item.status ? 'info' : 'error'">
           {{ item.status ? "Activo" : "Inactivo" }}
@@ -71,14 +103,12 @@
   </v-card>
 </template>
 <script setup lang="ts">
-import {  ref, Ref } from "vue";
+import { ref, Ref } from "vue";
 
 import type { DataTableResponse } from "@/common/types/data-table.types";
 import type { TypeAtention } from "@/app/attention-types/types";
 
-import {
-  DataTableDefaultResponse,
-} from "@/common/constants/data-table.constants";
+import { DataTableDefaultResponse } from "@/common/constants/data-table.constants";
 
 import { getItems } from "@/app/attention-types/services";
 
@@ -89,6 +119,11 @@ const headers = [
     title: "Nombre",
     sortable: true,
     value: "name",
+  },
+  {
+    title: "Atencion para",
+    sortable: true,
+    value: "type",
   },
   {
     title: "Estado",
@@ -107,8 +142,6 @@ const statusItems = [
 ];
 
 const loading = ref(false);
-
-
 
 const options = ref({
   page: 1,
@@ -129,5 +162,4 @@ const loadItems = async (options: any) => {
   items.value = await getItems(options.value);
   loading.value = false;
 };
-
 </script>

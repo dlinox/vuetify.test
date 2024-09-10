@@ -3,9 +3,9 @@
     class="d-flex align-center justify-center h-screen bg-gradient-to-r from-primary to-secondary"
   >
     <v-card
-      elevation="0"
-      rounded="xl"
       class="mx-auto bg-white pa-3"
+      elevation="0"
+      rounded="lg"
       max-width="450px"
     >
       <v-card-item class="">
@@ -71,8 +71,8 @@ import { AuthForm } from "@/app/auth/types/auth.types";
 import { signIn } from "@/app/auth/services/auth.services";
 
 const form: Ref<AuthForm> = ref({
-  email: "super@test.com",
-  password: "super@test.com",
+  email: "",
+  password: "",
 });
 
 const loading: Ref<boolean> = ref(false);

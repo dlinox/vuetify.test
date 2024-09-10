@@ -81,6 +81,12 @@
       items-per-page-text="Número de filas por página:"
       @update:options="loadItems"
     >
+      <template v-slot:item.user_id="{ item }">
+        {{
+          users.find((user) => String(user.value) === String(item.user_id))
+            ?.title
+        }}
+      </template>
       <template v-slot:item.actions="{ item }">
         <FormAttention
           :form-state="item"
@@ -115,9 +121,7 @@ import { careers } from "@/common/constants/careers";
 
 import DeleteItem from "@/app/attentions/components/DeleteItem.vue";
 
-import {
-  DataTableDefaultResponse,
-} from "@/common/constants/data-table.constants";
+import { DataTableDefaultResponse } from "@/common/constants/data-table.constants";
 
 import { getItemsStudent, exportPdf } from "@/app/attentions/services";
 
@@ -201,6 +205,11 @@ const headers = [
     title: "Tipo de atención",
     value: "type_attention_name",
   },
+  {
+    title: "Usuario",
+    value: "user_id",
+  },
+
   // {
   //   title: "Usuario",
   //   value: "user_id",
@@ -245,6 +254,4 @@ const loadItems = async (options: any) => {
   items.value = await getItemsStudent(options.value, props.type);
   loading.value = false;
 };
-
-
 </script>

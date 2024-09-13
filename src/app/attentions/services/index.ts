@@ -199,40 +199,34 @@ export const getItemsOffices = async (): Promise<SelectItem[]> => {
   }
 };
 
-export const exportPdf = async (data: any): Promise<void> => {
-  console.log(data);
-
+export const exportPdf = async (data: any, filters: any): Promise<void> => {
   try {
-    // Hacer la solicitud POST utilizando Axios
-    let response = await http().post("/pdf/report", data, {
-      responseType: "blob", // Necesario para obtener el blob directamente
-    });
+    console.log("filters", filters);
 
-    console.log(response);
+    const dataPdf = {
+      data: data,
+      filters: filters,
+    };
+
+    let response = await http().post("/pdf/report", dataPdf, {
+      responseType: "blob",
+    });
 
     let responseBlod = await response.data;
 
     let url = window.URL.createObjectURL(responseBlod);
 
-    // Create a link element to trigger the download
     var a = document.createElement("a");
     a.href = url;
-    a.download = "downloaded.pdf"; // Set the desired file name
+    a.download = "reporter.pdf";
     document.body.appendChild(a);
-
-    // Trigger a click event on the link element to initiate the download
     a.click();
-
-    // Clean up by revoking the blob URL and removing the link element
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
   } catch (error) {
     console.error("Error al generar o descargar el PDF:", error);
-    // Manejar el error de forma adecuada, mostrar un mensaje al usuario, etc.
   }
 };
-
-// common
 
 export const getItemsUsers = async (): Promise<SelectItem[]> => {
   try {
@@ -275,3 +269,14 @@ export const responseSurvey = async (
     return false;
   }
 };
+
+// Route::get("next-num-by-type/{typeId}", [AttentionController::class, 'getNextByType']);
+export const  getNextNumByType = async (typeId: number): Promise<number> => {
+  try {
+    let token = localStorage.getItem("token") as string;
+    let response = await http(token).get(`/attentions/next-num-by-type/${typeId}`);
+    return response.data;
+  } catch (error) {
+    return 0;
+  }
+}

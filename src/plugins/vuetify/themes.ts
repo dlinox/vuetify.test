@@ -1,4 +1,3 @@
-//secondary #FCBB52
 
 const primary = "#2EA7F2";
 

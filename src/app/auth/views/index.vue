@@ -28,7 +28,6 @@
               <v-text-field
                 v-model.trim="form.email"
                 label="Correo"
-                append-inner-icon="mdi-email"
               />
             </v-col>
 
@@ -36,7 +35,6 @@
               <v-text-field
                 v-model.trim="form.password"
                 label="Contraseña"
-                append-inner-icon="mdi-eye"
                 autocomplete="off"
                 type="password"
               />
@@ -48,6 +46,7 @@
                 variant="tonal"
                 block
                 :loading="loading"
+                loading-icon="mdi-home"
                 type="submit"
               >
                 Ingresar

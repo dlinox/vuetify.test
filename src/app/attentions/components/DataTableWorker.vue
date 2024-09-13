@@ -46,16 +46,7 @@
             class="mr-2"
             @update:model-value="loadItems(options)"
           />
-          <v-btn
-            color="primary"
-            @click="loadItems(options)"
-            :loading="loading"
-            :disabled="loading"
-            icon
-            variant="tonal"
-          >
-            <v-icon>mdi-refresh</v-icon>
-          </v-btn>
+      
         </v-col>
       </v-row>
     </v-card-item>

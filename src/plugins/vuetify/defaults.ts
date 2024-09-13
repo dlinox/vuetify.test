@@ -9,6 +9,7 @@ export default {
         class: "px-6 text-sm",
       },
     },
+    ripple: false, // Desactiva ripple en las tarjetas
   },
   VBtn: {
     color: "primary",
@@ -17,6 +18,7 @@ export default {
     variant: "flat",
     size: "large",
     class: "px-4",
+    ripple: false,
   },
   VTextField: {
     color: "black",

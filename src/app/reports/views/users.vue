@@ -14,9 +14,7 @@
           </v-btn>
         </v-col>
         <v-col cols="12" md="7" class="d-flex justify-end align-end">
-          <v-btn color="primary" icon variant="tonal">
-            <v-icon>mdi-refresh</v-icon>
-          </v-btn>
+   
         </v-col>
       </v-row>
     </v-card-item>
@@ -25,7 +23,6 @@
 </template>
 <script lang="ts" setup>
 import { Ref, ref } from "vue";
-
 import { getReportUsers } from "@/app/reports/services";
 
 // @ts-ignore

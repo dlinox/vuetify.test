@@ -39,7 +39,7 @@
 </template>
 <script setup lang="ts">
 import { ref, Ref } from "vue";
-import { fakeStudents } from "@/common/constants/fake-students.ts";
+
 import { searchProfessor } from "@/app/attentions/services";
 
 import { useRouter } from "vue-router";
@@ -53,9 +53,7 @@ const goToAttentionStudent = async (student: any) => {
 };
 
 const searchItem = async () => {
-  console.log(fakeStudents);
   items.value = await searchProfessor(search.value);
-  console.log(items);
-  //siular api con FakeStudents
+
 };
 </script>

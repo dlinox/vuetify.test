@@ -56,7 +56,6 @@
                   </v-col>
                   <v-col cols="12" md="8">
                     <v-combobox
-                      
                       v-model="form.type_attention_id"
                       :items="typeAttentions"
                       label="Tipo de Atencion"
@@ -178,7 +177,14 @@ const submit = async () => {
 
 const init = async () => {
   student.value = await getStudentByDocument(route.params.document as string);
-  typeAttentions.value = await getTypeAttentions();
+
+  let typeAttentionsFilter: any = await getTypeAttentions();
+  typeAttentionsFilter.filter((item: any) => {
+    if (item.type === "001") {
+      typeAttentions.value.push(item);
+    }
+  });
+
   offices.value = await getItemsOffices();
 
   form.value.email = student.value?.email || "";

@@ -2,7 +2,6 @@ import axios, { AxiosInstance } from "axios";
 
 import { useToast } from "vue-toast-notification";
 
-// Inicializar toast una vez al cargar el módulo
 const toast = useToast();
 
 export const http = (

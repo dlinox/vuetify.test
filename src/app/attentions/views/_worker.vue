@@ -167,7 +167,14 @@ const submit = async () => {
 
 const init = async () => {
   item.value = await getWorkerByDocument(route.params.document as string);
-  typeAttentions.value = await getTypeAttentions();
+
+  // typeAttentions.value = await getTypeAttentions();
+  let typeAttentionsFilter: any = await getTypeAttentions();
+  typeAttentionsFilter.filter((item: any) => {
+    if (item.type === "003") {
+      typeAttentions.value.push(item);
+    }
+  });
   offices.value = await getItemsOffices();
   form.value.email = item.value?.email || "";
 };

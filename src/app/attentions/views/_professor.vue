@@ -121,7 +121,7 @@ import {
   getTypeAttentions,
   getItemsOffices,
   storeItem,
-  getNextNumByType
+  getNextNumByType,
 } from "@/app/attentions/services";
 import { required, email } from "@/common/utils/ruleUtils";
 import { type Professor } from "@/app/professors/types";
@@ -168,10 +168,17 @@ const submit = async () => {
 
 const init = async () => {
   item.value = await getProfessorByDocument(route.params.document as string);
-  typeAttentions.value = await getTypeAttentions();
+
+  // typeAttentions.value = await getTypeAttentions();
+  let typeAttentionsFilter: any = await getTypeAttentions();
+  typeAttentionsFilter.filter((item: any) => {
+    if (item.type === "002") {
+      typeAttentions.value.push(item);
+    }
+  });
+
   offices.value = await getItemsOffices();
   form.value.email = item.value?.email || "";
-
 };
 
 init();

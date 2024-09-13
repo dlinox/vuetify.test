@@ -59,7 +59,6 @@ export const getItemsStudent = async (
       "/attentions/items-students/" + type,
       options
     );
-
     return response.data;
   } catch (error) {
     console.error(error);
@@ -201,14 +200,17 @@ export const getItemsOffices = async (): Promise<SelectItem[]> => {
 
 export const exportPdf = async (data: any, filters: any): Promise<void> => {
   try {
-    console.log("filters", filters);
-
     const dataPdf = {
       data: data,
-      filters: filters,
+      filters: {
+        ...filters.filters,
+        start_date: filters.startDate,
+        end_date: filters.endDate,
+      },
     };
+    const token = localStorage.getItem("token") as string;
 
-    let response = await http().post("/pdf/report", dataPdf, {
+    let response = await http(token).post("/pdf/report", dataPdf, {
       responseType: "blob",
     });
 
@@ -270,13 +272,14 @@ export const responseSurvey = async (
   }
 };
 
-// Route::get("next-num-by-type/{typeId}", [AttentionController::class, 'getNextByType']);
-export const  getNextNumByType = async (typeId: number): Promise<number> => {
+export const getNextNumByType = async (typeId: number): Promise<number> => {
   try {
     let token = localStorage.getItem("token") as string;
-    let response = await http(token).get(`/attentions/next-num-by-type/${typeId}`);
-    return response.data;
+    let response = await http(token).get(
+      `/attentions/next-num-by-type/${typeId}`
+    );
+    return response.data as number;
   } catch (error) {
     return 0;
   }
-}
+};

@@ -15,7 +15,7 @@
 
           <v-btn
             icon
-            @click="exportPdf(items?.data)"
+            @click="exportPdf(items?.data, options)"
             class="mr-2"
             color="red"
             variant="tonal"
@@ -23,15 +23,49 @@
             <v-icon>mdi-file-pdf-box</v-icon>
           </v-btn>
 
-          <v-text-field v-model="options.search" label="Buscar" />
+          <v-text-field class="ms-2" v-model="options.search" label="Buscar" />
         </v-col>
-        <v-col cols="12" md="7" class="d-flex justify-end align-end">
+
+        <v-col cols="12" md="7">
+          <v-card
+            variant="tonal"
+            class="w-100 d-flex justify-end align-end py-1"
+          >
+            <v-row>
+              <v-col cols="6">
+                <v-text-field
+                  class="ms-2"
+                  v-model="options.startDate"
+                  label="Fecha Inicio"
+                  type="date"
+                  density="comfortable"
+                />
+              </v-col>
+              <v-col cols="6">
+                <v-text-field
+                  class="ms-2"
+                  v-model="options.endDate"
+                  label="Fecha Fin"
+                  type="date"
+                  density="comfortable"
+                />
+              </v-col>
+            </v-row>
+            <v-btn
+              icon="mdi-magnify"
+              class="mx-2"
+              color="black"
+              density="comfortable"
+              @click="loadItems(options)"
+            >
+            </v-btn>
+          </v-card>
+        </v-col>
+        <v-col cols="12" class="d-flex justify-end align-end">
           <v-select
             v-model="options.filters.type_attention_id"
             :items="typeAttentions"
             label="Tipo de atención"
-            dense
-            outlined
             clearable
             class="mr-2"
             @update:model-value="loadItems(options)"
@@ -46,7 +80,6 @@
             class="mr-2"
             @update:model-value="loadItems(options)"
           />
-      
         </v-col>
       </v-row>
     </v-card-item>
@@ -135,6 +168,7 @@ const exportExcel = () => {
         "person_code",
         "person_name",
         "unit_name",
+        "user_name",
         "created_at",
       ],
       sheetHeader: [
@@ -144,6 +178,7 @@ const exportExcel = () => {
         "Código",
         "Nombre",
         "Unidad",
+        "Usuario",
         "Fecha",
       ],
     },
@@ -178,10 +213,10 @@ const headers = [
     title: "Tipo de atención",
     value: "type_attention_name",
   },
-  // {
-  //   title: "Usuario",
-  //   value: "user_id",
-  // },
+  {
+    title: "Usuario",
+    value: "user_name",
+  },
   // {
   //   title: "Oficina",
   //   value: "user_office_id",
@@ -204,8 +239,9 @@ const options = ref({
   search: "",
   filters: {} as any,
   sortBy: [],
+  startDate: null,
+  endDate: null,
 });
-
 
 const items: Ref<DataTableResponse<AttentionReport> | null> = ref({
   ...DataTableDefaultResponse,

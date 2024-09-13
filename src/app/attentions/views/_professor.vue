@@ -51,6 +51,7 @@
                       label="Tipo de Atencion"
                       :return-object="false"
                       :rules="[required]"
+                      @update:model-value="getNextNumAttention"
                     />
                   </v-col>
                   <v-col cols="12" md="4">
@@ -58,6 +59,7 @@
                       v-model="form.report_number"
                       label="Nro de Reporte"
                       :rules="[required]"
+                      readonly
                     />
                   </v-col>
                   <v-col cols="12">
@@ -119,6 +121,7 @@ import {
   getTypeAttentions,
   getItemsOffices,
   storeItem,
+  getNextNumByType
 } from "@/app/attentions/services";
 import { required, email } from "@/common/utils/ruleUtils";
 import { type Professor } from "@/app/professors/types";
@@ -140,6 +143,11 @@ const loading = ref(false);
 const form: Ref<Attention> = ref({
   ...AttentionDefault,
 });
+
+const getNextNumAttention = async (id: number) => {
+  form.value.report_number = await getNextNumByType(id);
+};
+
 const submit = async () => {
   const { valid } = await formRef.value?.validate();
   if (!valid) return;

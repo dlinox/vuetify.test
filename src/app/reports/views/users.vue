@@ -12,18 +12,27 @@
           >
             <v-icon>mdi-file-excel</v-icon>
           </v-btn>
+
+          <v-btn
+            icon
+            @click="exportPdfReportByUser(items)"
+            class="mr-2"
+            color="red"
+            variant="tonal"
+          >
+            <v-icon>mdi-file-pdf-box</v-icon>
+          </v-btn>
         </v-col>
-        <v-col cols="12" md="7" class="d-flex justify-end align-end">
-   
-        </v-col>
+        <v-col cols="12" md="7" class="d-flex justify-end align-end"> </v-col>
       </v-row>
     </v-card-item>
+
     <v-data-table :items="items" :headers="headers"></v-data-table>
   </v-card>
 </template>
 <script lang="ts" setup>
 import { Ref, ref } from "vue";
-import { getReportUsers } from "@/app/reports/services";
+import { getReportUsers, exportPdfReportByUser } from "@/app/reports/services";
 
 // @ts-ignore
 import ExportJsonExcel from "js-export-excel";

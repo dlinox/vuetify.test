@@ -25,6 +25,8 @@ interface DataTableOptions {
   search?: string;
   sortBy?: DataTableSort[];
   groupBy?: string;
+  startDate?: string;
+  endDate?: string;
 }
 
 export type { DataTableResponse, DataTableOptions };

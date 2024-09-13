@@ -22,16 +22,12 @@
                 <v-text-field
                   v-model="form.report_number"
                   label="Nro de Reporte"
-                  outlined
-                  dense
                 />
               </v-col>
               <v-col cols="12">
                 <v-textarea
                   v-model="form.description"
                   label="Descripcion"
-                  outlined
-                  dense
                 />
               </v-col>
               <v-col cols="12">

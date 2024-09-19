@@ -19,6 +19,7 @@
             class="mr-2"
             color="red"
             variant="tonal"
+            v-permission="['reports.pdf']"
           >
             <v-icon>mdi-file-pdf-box</v-icon>
           </v-btn>

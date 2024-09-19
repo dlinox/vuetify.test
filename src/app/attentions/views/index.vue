@@ -65,9 +65,7 @@
           </v-list-item-subtitle>
 
           <template v-slot:prepend>
-
-            
-            <DeleteItem :id="item.id"  @onSuccess="getToday"/>
+            <DeleteItem :id="item.id" @onSuccess="getToday" />
 
             <FormAttention
               :form-state="item"
@@ -84,7 +82,7 @@
                   variant="tonal"
                   color="teal-darken-3"
                   v-bind="activator"
-                  
+                  v-permission="['attentions.edit-temporal']"
                 >
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
@@ -122,8 +120,6 @@ interface Attention {
   person_id: number;
   now: string;
 }
-
-
 
 const getToday = async () => {
   attentions.value = await getTodayAttentions();

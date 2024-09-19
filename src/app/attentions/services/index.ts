@@ -16,7 +16,7 @@ import { useToast } from "vue-toast-notification";
 const toast = useToast();
 
 //GET STUDENT FROM OTI SERVICE
-export const _getStudentByCode = async (code: string): Promise<any> => {
+export const _getStudentByCode_ = async (code: string): Promise<any> => {
   try {
     const token = localStorage.getItem("token") as string;
 

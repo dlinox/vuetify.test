@@ -6,6 +6,7 @@
     icon="mdi-delete-empty"
     density="comfortable"
     class="mx-1"
+    v-permission="['attentions.delete-temporal']"
   >
   </v-btn>
 

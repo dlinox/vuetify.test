@@ -39,7 +39,7 @@
 </template>
 <script setup lang="ts">
 import { ref, Ref } from "vue";
-import { receiveStudent, getStudentByCode } from "@/app/attentions/services";
+import { receiveStudent,  _getStudentByCode_ } from "@/app/attentions/services";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -64,7 +64,7 @@ const goToAttentionStudent = async (student: any) => {
 const searchStudent = async () => {
   const { valid } = await formRef.value!.validate();
   if (!valid) return;
-  let response = await getStudentByCode(search.value);
+  let response = await _getStudentByCode_(search.value);
   students.value = [response.data];
 };
 </script>

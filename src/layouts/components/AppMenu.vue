@@ -18,7 +18,10 @@
       v-permission="['attentions']"
     />
 
-    <v-list-group value="reports" v-permission="['reports']">
+    <v-list-group
+      value="reports"
+      v-permission="['reports.attentions', 'reports.users']"
+    >
       <template v-slot:activator="{ props }">
         <v-list-item
           v-bind="props"
@@ -34,12 +37,14 @@
         prepend-icon="mdi-chart-line"
         link
         exact
+        v-permission="['reports.attentions']"
       />
       <v-list-item
         key="reports.users"
         to="/a/reports/users"
         title="Usuarios"
         prepend-icon="mdi-account"
+        v-permission="['reports.users']"
         link
         exact
       />

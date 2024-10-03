@@ -34,8 +34,9 @@
 }
 
 .v-list-group__items .v-list-item {
-  padding-inline-start: 2rem !important;
+  padding-inline-start: 1rem !important;
 }
+
 .v-field__outline {
   display: none !important;
 }

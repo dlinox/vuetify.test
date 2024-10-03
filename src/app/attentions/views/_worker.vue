@@ -40,7 +40,7 @@
                     <v-text-field
                       v-model="form.email"
                       label="Correo"
-                      :rules="[required, email]"
+                      :rules="[email]"
                       hint="El correo es obligatorio, para el envio de correos, asegurese de que sea correcto."
                       persistent-hint
                     />

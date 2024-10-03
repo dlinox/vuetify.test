@@ -1,9 +1,9 @@
-
-
 export const required = (value: any) => !!value || "Obligatorio";
 
 export const email = (value: string) => {
-  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //permite que si el corre es vacio no lo valide
+  if (value === "") return true;
+  const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return pattern.test(value) || "Correo electrónico no válido";
 };
 

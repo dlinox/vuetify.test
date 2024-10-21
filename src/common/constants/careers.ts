@@ -215,4 +215,10 @@ export const careers = [
     name: "PSICOLOGÍA",
     faculty: null,
   },
+  {
+    id: 37,
+    code: "D01",
+    name: "DEPARTAMENTO DE HUMANIDADES",
+    faculty: null,
+  },
 ];

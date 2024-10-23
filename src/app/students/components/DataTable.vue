@@ -16,13 +16,13 @@
           <v-text-field v-model="options.search" label="Buscar" />
         </v-col>
         <v-col cols="12" md="2">
-          <v-select
+          <!-- <v-select
             v-model="options.filters.status"
             label="Estado"
             :items="statusItems"
             clearable
             @update:model-value="loadItems(options)"
-          />
+          /> -->
         </v-col>
       </v-row>
     </v-card-item>
@@ -34,8 +34,8 @@
       :search="options.search"
       multi-sort
       :loading="loading"
-      item-value="id"
-      @update:options="loadItems(options)"
+      item-value="student_code"
+      @update:options="loadItems"
     >
       <template v-slot:item.status="{ item }">
         <v-chip :color="item.status ? 'info' : 'error'">
@@ -54,34 +54,28 @@
             />
           </template>
         </Form>
-
-        <!-- <v-btn
-          density="comfortable"
-          icon="mdi-minus-circle-outline"
-          class="text-button ms-2"
-          variant="tonal"
-          color="error"
-        >
-        </v-btn> -->
       </template>
     </v-data-table-server>
   </v-card>
 </template>
 <script setup lang="ts">
-import {  ref, Ref } from "vue";
+import { ref, Ref } from "vue";
 
 import type { DataTableResponse } from "@/common/types/data-table.types";
 import type { Student } from "@/app/students/types";
 
-import {
-  DataTableDefaultResponse,
-} from "@/common/constants/data-table.constants";
+import { DataTableDefaultResponse } from "@/common/constants/data-table.constants";
 
 import { getItems } from "@/app/students/services";
 
 import Form from "@/app/students/components/Form.vue";
 
 const headers = [
+  {
+    title: "Codigo de Estudiante",
+    sortable: true,
+    value: "student_code",
+  },
   {
     title: "Nombre",
     sortable: true,
@@ -97,6 +91,12 @@ const headers = [
     sortable: true,
     value: "maternal_surname",
   },
+
+  {
+    title: "Carrera",
+    sortable: true,
+    value: "career_name",
+  },
   {
     title: "Estado",
     sortable: true,
@@ -108,10 +108,10 @@ const headers = [
   },
 ];
 
-const statusItems = [
-  { title: "Activo", value: true },
-  { title: "Inactivo", value: false },
-];
+// const statusItems = [
+//   { title: "Activo", value: true },
+//   { title: "Inactivo", value: false },
+// ];
 
 const loading = ref(false);
 const options = ref({
@@ -126,11 +126,11 @@ const items: Ref<DataTableResponse<Student> | null> = ref({
   ...DataTableDefaultResponse,
 });
 
+
 const loadItems = async (options: any) => {
   loading.value = true;
   options.value = { ...options.value, ...options };
   items.value = await getItems(options.value);
   loading.value = false;
 };
-
 </script>

@@ -84,7 +84,9 @@
             </v-row>
           </v-card-item>
           <v-card-actions>
-            <v-btn text="Cancel" @click="isActive.value = false"></v-btn>
+            <v-btn color="secondary" @click="isActive.value = false">
+              Cancelar
+            </v-btn>
             <v-spacer></v-spacer>
             <v-btn
               text="Guardar"

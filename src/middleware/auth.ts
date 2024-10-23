@@ -23,6 +23,9 @@ export const noAuthMiddleware = async (
   _from: RouteLocationNormalized,
   next: NavigationGuardNext
 ) => {
+  
+  if (_to.name == "Login") return next();
+
   const auth = await user();
   if (auth) {
     console.log("Redirecting to dashboard...");

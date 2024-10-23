@@ -25,10 +25,7 @@
         <v-form @submit.prevent="submit" ref="formAuthRef">
           <v-row>
             <v-col cols="12">
-              <v-text-field
-                v-model.trim="form.email"
-                label="Correo"
-              />
+              <v-text-field v-model.trim="form.email" label="Correo" />
             </v-col>
 
             <v-col cols="12">
@@ -67,7 +64,7 @@
 <script setup lang="ts">
 import { Ref, ref } from "vue";
 import { AuthForm } from "@/app/auth/types/auth.types";
-import { signIn } from "@/app/auth/services/auth.services";
+import { signIn, clearSession } from "@/app/auth/services/auth.services";
 
 const form: Ref<AuthForm> = ref({
   email: "",
@@ -86,4 +83,10 @@ const submit = async (): Promise<void> => {
     loading.value = false;
   }
 };
+
+const init = (): void => {
+  clearSession();
+};
+
+init();
 </script>

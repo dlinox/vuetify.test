@@ -2,7 +2,7 @@
   <v-row no-gutters>
     <v-col cols="12" md="7">
       <v-card class="rounded-0">
-        <v-toolbar density="compact" title="Nueva tencion">
+        <v-toolbar density="compact" title="Nueva atención">
           <template #extension>
             <v-tabs v-model="tab">
               <v-tab value="student" v-permission="['attentions.student']">
@@ -41,16 +41,9 @@
       </v-card>
     </v-col>
     <v-col cols="12" md="5">
-      <v-card class="rounded-0">
+      <v-card class="rounded-0 overflow-auto" max-height="500">
         <v-toolbar density="compact" title="Hoy">
           <v-spacer></v-spacer>
-          <!-- <v-btn
-            link
-            to="/a/attentions/reports"
-            v-permission="['attentions.report']"
-          >
-            <small>ver todo</small>
-          </v-btn> -->
         </v-toolbar>
         <v-list-item v-for="item in attentions" :key="item.id" class="border-t">
           <v-list-item-title>

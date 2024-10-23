@@ -24,14 +24,14 @@
             :items="typeItems"
             clearable
             class="me-2"
-            @update:model-value="loadItems"
+            @update:model-value="loadItems(options)"
           />
           <v-select
             v-model="options.filters.status"
             label="Estado"
             :items="statusItems"
             clearable
-            @update:model-value="loadItems"
+            @update:model-value="loadItems(options)"
           />
         </v-col>
       </v-row>
@@ -158,8 +158,13 @@ const items: Ref<DataTableResponse<Worker> | null> = ref({
   ...DataTableDefaultResponse,
 });
 
-const loadItems = async () => {
+const loadItems = async (op: any) => {
   loading.value = true;
+  options.value = {
+    ...options.value,
+    ...op,
+    filters: { ...options.value.filters },
+  };
   items.value = await getItems(options.value);
   loading.value = false;
 };

@@ -43,11 +43,11 @@ export const user = async () => {
     authStore.setAuthState(response.data);
     return response.data;
   } catch (error: any) {
-    // if (error.response.status === 401) {
-    //   localStorage.removeItem("token");
-    //   authStore.clearAuthState();
-    //   window.location.href = "/";
-    // }
+    if (error.response.status === 401) {
+      localStorage.removeItem("token");
+      authStore.clearAuthState();
+      // window.location.href = "/";
+    }
 
     return false;
   }

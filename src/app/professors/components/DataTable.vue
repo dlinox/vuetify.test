@@ -22,7 +22,7 @@
             label="Estado"
             :items="statusItems"
             clearable
-            @update:model-value="loadItems"
+            @update:model-value="loadItems(options)"
           />
         </v-col>
       </v-row>
@@ -74,6 +74,7 @@ import { getItems } from "@/app/professors/services";
 import Form from "@/app/professors/components/Form.vue";
 
 import { careers } from "@/common/constants/careers";
+
 const headers = [
   {
     title: "DNI",
@@ -126,6 +127,7 @@ const statusItems = [
 ];
 
 const loading = ref(false);
+
 const options = ref({
   page: 1,
   itemsPerPage: 10,
@@ -138,9 +140,14 @@ const items: Ref<DataTableResponse<Professor> | null> = ref({
   ...DataTableDefaultResponse,
 });
 
-const loadItems = async (options: any) => {
+const loadItems = async (op: any) => {
   loading.value = true;
-  options.value = { ...options.value, ...options };
+  console.log("options");
+  options.value = {
+    ...options.value,
+    ...op,
+    filters: { ...options.value.filters },
+  };
   items.value = await getItems(options.value);
   loading.value = false;
 };

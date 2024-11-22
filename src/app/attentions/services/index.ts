@@ -4,7 +4,6 @@ import { type Student } from "@/app/students/types";
 import { SelectItem } from "@/common/types/select.types";
 import { DataTableDefaultResponse } from "@/common/constants/data-table.constants";
 import {
-  DataTableOptions,
   DataTableResponse,
 } from "@/common/types/data-table.types";
 import { AttentionReport } from "@/app/attentions/types";
@@ -50,7 +49,7 @@ export const getStudentByCode = async (code: string): Promise<any> => {
 
 //getItemsStudent
 export const getItemsStudent = async (
-  options: DataTableOptions,
+  options: any,
   type: string
 ): Promise<DataTableResponse<AttentionReport>> => {
   try {

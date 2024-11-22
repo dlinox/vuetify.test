@@ -269,7 +269,7 @@ const loadItems = async (options: any) => {
   loading.value = true;
   // options.value = { ...options, ...options.value };
   console.log(options);
-  items.value = await getItemsStudent(options.value, props.type);
+  items.value = await getItemsStudent(options, props.type);
   loading.value = false;
 };
 </script>

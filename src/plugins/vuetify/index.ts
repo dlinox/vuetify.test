@@ -1,5 +1,5 @@
-import "vuetify/styles";
-import "@mdi/font/css/materialdesignicons.css";
+import "vuetify/dist/vuetify.min.css";
+import "@mdi/font/css/materialdesignicons.min.css";
 import { createVuetify } from "vuetify";
 
 import * as components from "./components";

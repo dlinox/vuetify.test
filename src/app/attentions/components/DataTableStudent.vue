@@ -19,7 +19,7 @@
             class="mr-2"
             color="red"
             variant="tonal"
-             v-permission="['reports.pdf']"
+            v-permission="['reports.pdf']"
           >
             <v-icon>mdi-file-pdf-box</v-icon>
           </v-btn>
@@ -267,7 +267,8 @@ const items: Ref<DataTableResponse<AttentionReport> | null> = ref({
 
 const loadItems = async (options: any) => {
   loading.value = true;
-  options.value = { ...options, ...options.value  };
+  // options.value = { ...options, ...options.value };
+  console.log(options.value);
   items.value = await getItemsStudent(options.value, props.type);
   loading.value = false;
 };

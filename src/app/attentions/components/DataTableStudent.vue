@@ -267,8 +267,6 @@ const items: Ref<DataTableResponse<AttentionReport> | null> = ref({
 
 const loadItems = async (op: any) => {
   loading.value = true;
-  // options.value = { ...options, ...options.value };
-  console.log(options.value);
   options.value = { ...options.value, ...op };
   items.value = await getItemsStudent(options.value, props.type);
   loading.value = false;
